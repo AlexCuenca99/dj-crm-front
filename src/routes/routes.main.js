@@ -1,5 +1,5 @@
-import { MainLayout } from '../layouts';
 import { Login } from '../pages/Main';
+import { MainLayout } from '../layouts';
 
 const routesMain = [
 	{
