@@ -1,5 +1,9 @@
-function App() {
-	return <div className="app"></div>;
-}
+import React from 'react';
 
-export default App;
+export default function App() {
+	return (
+		<div>
+			<h1>dj CRM</h1>
+		</div>
+	);
+}
