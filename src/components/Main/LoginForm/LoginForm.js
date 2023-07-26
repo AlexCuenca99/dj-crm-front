@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import * as Yup from 'yup';
+import { map } from 'lodash';
 import { useFormik } from 'formik';
 import {
 	FormControl,
@@ -20,9 +21,10 @@ import {
 } from '@chakra-ui/react';
 
 import { loginApi } from '../../../api/users';
-import { map } from 'lodash';
+import { useAuth } from '../../../hooks';
 
 export function LoginForm() {
+	const { login } = useAuth();
 	const [showErrorMessage, setShowErrorMessage] = useState(false);
 	const [errorMessage, setErrorMessage] = useState(undefined);
 
@@ -35,7 +37,7 @@ export function LoginForm() {
 				const response = await loginApi(formValue);
 				const { access } = response;
 
-				console.log(access);
+				login(access);
 			} catch (error) {
 				console.log(error.message);
 				setShowErrorMessage(true);

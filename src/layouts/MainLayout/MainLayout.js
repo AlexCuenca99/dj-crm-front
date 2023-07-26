@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { Navbar } from '../../components/Main';
 import { LoginPage } from '../../pages/Main';
+import { useAuth } from '../../hooks';
 
 export function MainLayout(props) {
 	const { children } = props;
 
-	const auth = null;
+	const { auth } = useAuth();
 
 	if (!auth) return <LoginPage />;
 

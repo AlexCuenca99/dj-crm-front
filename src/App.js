@@ -5,6 +5,7 @@ import React from 'react';
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 
 import { Navigation } from './routes';
+import { AuthProvider } from './context';
 
 const theme = extendTheme({
 	fonts: {
@@ -15,8 +16,10 @@ const theme = extendTheme({
 
 export default function App() {
 	return (
-		<ChakraProvider theme={theme}>
-			<Navigation />
-		</ChakraProvider>
+		<AuthProvider>
+			<ChakraProvider theme={theme}>
+				<Navigation />
+			</ChakraProvider>
+		</AuthProvider>
 	);
 }
