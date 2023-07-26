@@ -33,9 +33,9 @@ export function LoginForm() {
 		onSubmit: async (formValue) => {
 			try {
 				const response = await loginApi(formValue);
-				const token = response.access;
+				const { access } = response;
 
-				console.log(token);
+				console.log(access);
 			} catch (error) {
 				console.log(error.message);
 				setShowErrorMessage(true);
