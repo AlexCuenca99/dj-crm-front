@@ -10,10 +10,5 @@ export function HomeAuthPage() {
 		logout();
 		navigate('/');
 	};
-	return (
-		<div>
-			HomeAuthPage
-			<button onClick={handleLogOut}>Log out</button>
-		</div>
-	);
+	return <div>HomeAuthPage</div>;
 }
