@@ -1,7 +1,6 @@
-import React from 'react';
-import { useFormik } from 'formik';
+import React, { useState } from 'react';
 import * as Yup from 'yup';
-
+import { useFormik } from 'formik';
 import {
 	FormControl,
 	FormLabel,
@@ -11,15 +10,38 @@ import {
 	Button,
 	Text,
 	FormErrorMessage,
+	Alert,
+	AlertIcon,
+	AlertTitle,
+	AlertDescription,
+	UnorderedList,
+	ListItem,
+	Collapse,
 } from '@chakra-ui/react';
 
+import { loginApi } from '../../../api/users';
+import { map } from 'lodash';
+
 export function LoginForm() {
+	const [showErrorMessage, setShowErrorMessage] = useState(false);
+	const [errorMessage, setErrorMessage] = useState(undefined);
+
 	const formik = useFormik({
 		initialValues: initialValues(),
 		validationSchema: Yup.object(validationSchema()),
 		validateOnChange: true,
-		onSubmit: (formValue) => {
-			console.log('Loging in');
+		onSubmit: async (formValue) => {
+			try {
+				const response = await loginApi(formValue);
+				const token = response.access;
+
+				console.log(token);
+			} catch (error) {
+				console.log(error.message);
+				setShowErrorMessage(true);
+				setErrorMessage(error.message.split(','));
+				setTimeout(() => setShowErrorMessage(false), 3000);
+			}
 		},
 	});
 
@@ -66,12 +88,26 @@ export function LoginForm() {
 					<Checkbox>Remember me</Checkbox>
 					<Text color={'blue.400'}>Forgot password?</Text>
 				</Stack>
+				<Collapse in={showErrorMessage} animateOpacity>
+					<Alert status="error" visibility={showErrorMessage}>
+						<AlertIcon />
+						<AlertTitle>Something went wrong</AlertTitle>
+						<AlertDescription>
+							<UnorderedList>
+								{map(errorMessage, (error, index) => (
+									<ListItem key={index}>{error}</ListItem>
+								))}
+							</UnorderedList>
+						</AlertDescription>
+					</Alert>
+				</Collapse>
 				<Button
 					bg={'blue.400'}
 					color={'white'}
 					_hover={{
 						bg: 'blue.500',
 					}}
+					isLoading={formik.isSubmitting}
 					onClick={formik.handleSubmit}
 				>
 					Sign in
