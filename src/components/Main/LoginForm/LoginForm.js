@@ -22,8 +22,11 @@ import {
 
 import { loginApi } from '../../../api/users';
 import { useAuth } from '../../../hooks';
+import { useNavigate } from 'react-router-dom';
 
 export function LoginForm() {
+	const navigate = useNavigate();
+
 	const { login } = useAuth();
 	const [showErrorMessage, setShowErrorMessage] = useState(false);
 	const [errorMessage, setErrorMessage] = useState(undefined);
@@ -38,6 +41,7 @@ export function LoginForm() {
 				const { access } = response;
 
 				login(access);
+				navigate('/');
 			} catch (error) {
 				console.log(error.message);
 				setShowErrorMessage(true);
