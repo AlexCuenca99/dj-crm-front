@@ -224,7 +224,7 @@ export function MainLayout(props) {
 			<MobileNav onOpen={onOpen} />
 
 			{/* Main Content */}
-			<Box ml={{ base: 0, md: 60 }} p="4">
+			<Box ml={{ base: 0, md: 60 }} p="10">
 				{children}
 			</Box>
 		</Box>
