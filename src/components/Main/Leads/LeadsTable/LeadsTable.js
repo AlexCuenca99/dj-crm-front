@@ -1,8 +1,7 @@
 import React from 'react';
 import { map } from 'lodash';
-import { Link as ReactRouterLink } from 'react-router-dom';
 import {
-	Link,
+	IconButton,
 	Table,
 	TableCaption,
 	TableContainer,
@@ -13,6 +12,8 @@ import {
 	Thead,
 	Tr,
 } from '@chakra-ui/react';
+import { FiEdit2 } from 'react-icons/fi';
+import { RiDeleteBin5Line } from 'react-icons/ri';
 
 export default function LeadsTable(props) {
 	const { leads } = props;
@@ -52,13 +53,30 @@ export default function LeadsTable(props) {
 									? lead.agent.user.first_name
 									: 'No yet assigned'}
 							</Td>
-							<Td>
-								<Link as={ReactRouterLink}>Edit</Link>
-							</Td>
+							<Actions lead={lead} />
 						</Tr>
 					))}
 				</Tbody>
 			</Table>
 		</TableContainer>
+	);
+}
+
+function Actions(props) {
+	const { lead } = props;
+
+	return (
+		<Td>
+			<IconButton
+				aria-label="Edit lead"
+				icon={<FiEdit2 size={17} />}
+				onClick={() => console.log('Edit', lead.first_name)}
+			/>
+			<IconButton
+				aria-label="Delete lead"
+				icon={<RiDeleteBin5Line size={17} />}
+				onClick={() => console.log('Edit', lead.first_name)}
+			/>
+		</Td>
 	);
 }
