@@ -1,9 +1,15 @@
 import React, { useEffect } from 'react';
 
 import { useLeads } from '../../hooks';
-import { HeaderPage } from '../../components/Main';
+import { HeaderPage, UnassignedLeadsCards } from '../../components/Main';
 import { isEmpty } from 'lodash';
-import { Alert, AlertIcon, Spinner } from '@chakra-ui/react';
+import {
+	Alert,
+	AlertIcon,
+	Spinner,
+	StackDivider,
+	VStack,
+} from '@chakra-ui/react';
 import LeadsTable from '../../components/Main/Leads/LeadsTable/LeadsTable';
 
 export function LeadsPage() {
@@ -32,7 +38,14 @@ export function LeadsPage() {
 					There is not any lead to show
 				</Alert>
 			) : (
-				<LeadsTable leads={leads} />
+				<VStack
+					divider={<StackDivider />}
+					spacing={5}
+					alignItems="start"
+				>
+					<LeadsTable leads={leads} />
+					<UnassignedLeadsCards leads={leads} />
+				</VStack>
 			)}
 		</>
 	);
