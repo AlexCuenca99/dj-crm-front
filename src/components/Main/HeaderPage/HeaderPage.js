@@ -6,7 +6,7 @@ export function HeaderPage(props) {
 	const { title, action, actionTitle, action2, actionTitle2 } = props;
 
 	return (
-		<Box>
+		<Box pb="10">
 			<Flex minWidth="max-content" alignItems="center" gap="2">
 				<VStack align={'start'}>
 					<Heading as="h2" size={'2xl'}>
