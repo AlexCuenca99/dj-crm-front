@@ -11,6 +11,7 @@ export function UnassignedLeadsCards(props) {
 		<Stack spacing={8} direction="row">
 			{map(leads, (lead, _) => (
 				<UnassignedLeadsCard
+					key={lead.id}
 					fullName={`${lead.first_name} ${lead.last_name}`}
 					id={lead.id}
 				/>
