@@ -4,6 +4,7 @@ import { useLeads } from '../../hooks';
 import { HeaderPage } from '../../components/Main';
 import { isEmpty } from 'lodash';
 import { Alert, AlertIcon, Spinner } from '@chakra-ui/react';
+import LeadsTable from '../../components/Main/Leads/LeadsTable/LeadsTable';
 
 export function LeadsPage() {
 	const { loading, error, leads, getLeads } = useLeads();
@@ -31,7 +32,7 @@ export function LeadsPage() {
 					There is not any lead to show
 				</Alert>
 			) : (
-				<h1>Leads table</h1>
+				<LeadsTable leads={leads} />
 			)}
 		</>
 	);
