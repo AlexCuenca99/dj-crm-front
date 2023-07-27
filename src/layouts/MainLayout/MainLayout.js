@@ -21,6 +21,7 @@ import {
 	MenuDivider,
 	MenuItem,
 	MenuList,
+	DrawerOverlay,
 } from '@chakra-ui/react';
 import {
 	FiHome,
@@ -213,6 +214,7 @@ export function MainLayout(props) {
 				onOverlayClick={onClose}
 				size="full"
 			>
+				<DrawerOverlay />
 				<DrawerContent>
 					<SidebarContent onClose={onClose} />
 				</DrawerContent>
