@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import { useLeads } from '../../hooks';
 import { HeaderPage, UnassignedLeadsCards } from '../../components/Main';
-import { isEmpty } from 'lodash';
+import { filter, isEmpty } from 'lodash';
 import {
 	Alert,
 	AlertIcon,
@@ -15,11 +15,11 @@ import LeadsTable from '../../components/Main/Leads/LeadsTable/LeadsTable';
 export function LeadsPage() {
 	const { loading, error, leads, getLeads } = useLeads();
 
-	console.log(leads);
-
 	useEffect(() => {
 		getLeads();
 	}, []);
+
+	const unassignedLeads = filter(leads, { agent: null });
 
 	return (
 		<>
@@ -44,7 +44,7 @@ export function LeadsPage() {
 					alignItems="start"
 				>
 					<LeadsTable leads={leads} />
-					<UnassignedLeadsCards leads={leads} />
+					<UnassignedLeadsCards leads={unassignedLeads} />
 				</VStack>
 			)}
 		</>
