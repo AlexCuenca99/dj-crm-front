@@ -20,7 +20,7 @@ export default function LeadsTable(props) {
 
 	return (
 		<TableContainer>
-			<Table variant="simple">
+			<Table variant="simple" size="sm">
 				<TableCaption>Leads users</TableCaption>
 				<Thead>
 					<Tr>
