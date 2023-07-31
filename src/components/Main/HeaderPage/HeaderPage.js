@@ -25,9 +25,7 @@ export function HeaderPage(props) {
 					</Link>
 				</VStack>
 				<Spacer />
-				<Button onClick={action} as={ReactRouterLink}>
-					{actionTitle}
-				</Button>
+				<Button onClick={action}>{actionTitle}</Button>
 			</Flex>
 		</Box>
 	);
