@@ -23,6 +23,10 @@ export function LeadsPage() {
 	const { onOpen, isOpen, onClose } = useDisclosure();
 	const [drawerTitle, setDrawerTitle] = useState(null);
 	const [drawerContent, setDrawerContent] = useState(null);
+	const [alertTitle, setAlertTitle] = useState(null);
+	const [alertBody, setAlertBody] = useState(null);
+	const [alertMainActionTitle, setAlertMainActionTitle] = useState(null);
+	const [alertMainActionColor, setAlertMainActionColor] = useState(null);
 
 	useEffect(() => {
 		getLeads();
@@ -35,6 +39,12 @@ export function LeadsPage() {
 	const addLead = () => {
 		setDrawerTitle('Create a new lead');
 		setDrawerContent(<AddEditLeadsForm />);
+		setAlertTitle('Create lead?');
+		setAlertBody(
+			'Are you sure you want to create a new lead with entered data?'
+		);
+		setAlertMainActionTitle('Create');
+		setAlertMainActionColor('blue');
 		onOpen();
 	};
 
@@ -66,12 +76,17 @@ export function LeadsPage() {
 				</VStack>
 			)}
 			<BaseDrawer
+				loading={loading}
 				size={'sm'}
 				title={drawerTitle}
-				isOpen={isOpen}
-				onClose={onClose}
+				isOpenDrawer={isOpen}
+				onCloseDrawer={onClose}
 				children={drawerContent}
 				action1={() => console.log('Created lead')}
+				alertTitle={alertTitle}
+				alertBody={alertBody}
+				alertMainActionTitle={alertMainActionTitle}
+				alertMainActionColor={alertMainActionColor}
 			/>
 		</>
 	);

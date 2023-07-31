@@ -30,8 +30,10 @@ export function AddEditLeadsForm(props) {
 
 		onSubmit: async (formValue) => {
 			try {
-				if (lead) console.log('Lead creado');
-				else console.log('Lead actualizado');
+				if (lead) console.log('Lead actualizado');
+				else {
+					console.log('Lead creado');
+				}
 			} catch (error) {
 				console.log('Error in lead');
 			}
@@ -160,7 +162,9 @@ export function AddEditLeadsForm(props) {
 						onBlur={formik.handleBlur}
 					>
 						{map(genderOptions, (gender, _) => (
-							<option key={gender.key}>{gender.text}</option>
+							<option key={gender.key} value={gender.value}>
+								{gender.text}
+							</option>
 						))}
 					</Select>
 					{!formik.errors.gender ? (
@@ -238,7 +242,9 @@ export function AddEditLeadsForm(props) {
 						formik.setFieldValue('agent', event.target.value)
 					}
 				>
-					<option key={0}>Agent 1</option>
+					<option key={0} value={0}>
+						Agent 1
+					</option>
 				</Select>
 				{!formik.errors.agent ? (
 					<FormHelperText>Select the agent</FormHelperText>

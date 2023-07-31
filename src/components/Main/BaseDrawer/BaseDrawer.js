@@ -8,28 +8,70 @@ import {
 	DrawerContent,
 	DrawerCloseButton,
 	Button,
+	useDisclosure,
 } from '@chakra-ui/react';
 
+import { CustomAlertDialog } from '../index';
+
 export function BaseDrawer(props) {
-	const { title, isOpen, onClose, size, children, action1 } = props;
+	const {
+		loading,
+		title,
+		isOpenDrawer,
+		onCloseDrawer,
+		size,
+		children,
+		action1,
+		alertTitle,
+		alertBody,
+		alertMainActionTitle,
+		alertMainActionColor,
+	} = props;
+
+	const { isOpen, onClose, onOpen } = useDisclosure();
 
 	return (
-		<Drawer isOpen={isOpen} placement="right" onClose={onClose} size={size}>
-			<DrawerOverlay />
-			<DrawerContent>
-				<DrawerCloseButton />
-				<DrawerHeader>{title}</DrawerHeader>
-				<DrawerBody>{children}</DrawerBody>
-				<DrawerFooter>
-					<Button variant="outline" mr={3} onClick={onClose}>
-						Cancel
-					</Button>
-					<Button form="leads-form" colorScheme="blue" type="submit">
-						Save
-					</Button>
-				</DrawerFooter>
-			</DrawerContent>
-		</Drawer>
+		<>
+			<Drawer
+				isOpen={isOpenDrawer}
+				placement="right"
+				onClose={onCloseDrawer}
+				size={size}
+			>
+				<DrawerOverlay />
+				<DrawerContent>
+					<DrawerCloseButton />
+					<DrawerHeader>{title}</DrawerHeader>
+					<DrawerBody>{children}</DrawerBody>
+					<DrawerFooter>
+						<Button
+							isDisabled={loading}
+							variant="outline"
+							mr={3}
+							onClick={onCloseDrawer}
+						>
+							Cancel
+						</Button>
+						<Button
+							onClick={onOpen}
+							isLoading={loading}
+							colorScheme="blue"
+						>
+							Save
+						</Button>
+					</DrawerFooter>
+				</DrawerContent>
+			</Drawer>
+			<CustomAlertDialog
+				loading={loading}
+				isOpenAlert={isOpen}
+				onCloseAlert={onClose}
+				title={alertTitle}
+				body={alertBody}
+				mainActionTitle={alertMainActionTitle}
+				mainActionColor={alertMainActionColor}
+			/>
+		</>
 	);
 }
 
