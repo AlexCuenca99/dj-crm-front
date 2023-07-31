@@ -11,8 +11,11 @@ import {
 	VStack,
 	useDisclosure,
 } from '@chakra-ui/react';
-import LeadsTable from '../../components/Main/Leads/LeadsTable/LeadsTable';
-import { BaseDrawer } from '../../components/Main/BaseDrawer/BaseDrawer';
+import {
+	AddEditLeadsForm,
+	LeadsTable,
+	BaseDrawer,
+} from '../../components/Main';
 
 export function LeadsPage() {
 	const { loading, error, leads, getLeads } = useLeads();
@@ -30,7 +33,7 @@ export function LeadsPage() {
 	// Create a new Lead
 	const addLead = () => {
 		setDrawerTitle('Create a new lead');
-		setDrawerContent(<h1>Creating a new lead</h1>);
+		setDrawerContent(<AddEditLeadsForm />);
 		onOpen();
 	};
 
@@ -62,6 +65,7 @@ export function LeadsPage() {
 				</VStack>
 			)}
 			<BaseDrawer
+				size={'sm'}
 				title={drawerTitle}
 				isOpen={isOpen}
 				onClose={onClose}
