@@ -12,10 +12,11 @@ import {
 	useDisclosure,
 } from '@chakra-ui/react';
 import LeadsTable from '../../components/Main/Leads/LeadsTable/LeadsTable';
+import { BaseDrawer } from '../../components/Main/BaseDrawer/BaseDrawer';
 
 export function LeadsPage() {
 	const { loading, error, leads, getLeads } = useLeads();
-	const { isOpen, onClose, onOpen } = useDisclosure();
+	const { onOpen, isOpen, onClose } = useDisclosure();
 
 	useEffect(() => {
 		getLeads();
@@ -27,7 +28,7 @@ export function LeadsPage() {
 		<>
 			<HeaderPage
 				title={'Leads'}
-				action={() => console.log('Action 1')}
+				action={onOpen}
 				useDisclosure={useDisclosure}
 				actionTitle={'Create a new lead'}
 				action2={() => console.log('Action 2')}
@@ -50,6 +51,11 @@ export function LeadsPage() {
 					<UnassignedLeadsCards leads={unassignedLeads} />
 				</VStack>
 			)}
+			<BaseDrawer
+				title={'Create a new lead'}
+				isOpen={isOpen}
+				onClose={onClose}
+			/>
 		</>
 	);
 }
