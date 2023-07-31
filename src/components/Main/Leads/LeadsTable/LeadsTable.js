@@ -15,7 +15,7 @@ import {
 import { FiEdit2 } from 'react-icons/fi';
 import { RiDeleteBin5Line } from 'react-icons/ri';
 
-export default function LeadsTable(props) {
+export function LeadsTable(props) {
 	const { leads } = props;
 
 	return (
