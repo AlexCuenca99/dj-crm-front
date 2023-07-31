@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useLeads } from '../../hooks';
 import { HeaderPage, UnassignedLeadsCards } from '../../components/Main';
@@ -17,18 +17,28 @@ import { BaseDrawer } from '../../components/Main/BaseDrawer/BaseDrawer';
 export function LeadsPage() {
 	const { loading, error, leads, getLeads } = useLeads();
 	const { onOpen, isOpen, onClose } = useDisclosure();
+	const [drawerTitle, setDrawerTitle] = useState(null);
+	const [drawerContent, setDrawerContent] = useState(null);
 
 	useEffect(() => {
 		getLeads();
 	}, []);
 
+	// Filter unassigned leads from server request
 	const unassignedLeads = filter(leads, { agent: null });
+
+	// Create a new Lead
+	const addLead = () => {
+		setDrawerTitle('Create a new lead');
+		setDrawerContent(<h1>Creating a new lead</h1>);
+		onOpen();
+	};
 
 	return (
 		<>
 			<HeaderPage
 				title={'Leads'}
-				action={onOpen}
+				action={addLead}
 				useDisclosure={useDisclosure}
 				actionTitle={'Create a new lead'}
 				action2={() => console.log('Action 2')}
@@ -52,9 +62,11 @@ export function LeadsPage() {
 				</VStack>
 			)}
 			<BaseDrawer
-				title={'Create a new lead'}
+				title={drawerTitle}
 				isOpen={isOpen}
 				onClose={onClose}
+				children={drawerContent}
+				action1={() => console.log('Created lead')}
 			/>
 		</>
 	);
