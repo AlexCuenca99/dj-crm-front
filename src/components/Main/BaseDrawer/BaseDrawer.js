@@ -24,7 +24,7 @@ export function BaseDrawer(props) {
 					<Button variant="outline" mr={3} onClick={onClose}>
 						Cancel
 					</Button>
-					<Button colorScheme="blue" onClick={action1}>
+					<Button form="leads-form" colorScheme="blue" type="submit">
 						Save
 					</Button>
 				</DrawerFooter>

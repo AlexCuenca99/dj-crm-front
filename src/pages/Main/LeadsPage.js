@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 
-import { useLeads } from '../../hooks';
-import { HeaderPage, UnassignedLeadsCards } from '../../components/Main';
 import { filter, isEmpty } from 'lodash';
 import {
 	Alert,
@@ -11,6 +9,9 @@ import {
 	VStack,
 	useDisclosure,
 } from '@chakra-ui/react';
+
+import { useLeads } from '../../hooks';
+import { HeaderPage, UnassignedLeadsCards } from '../../components/Main';
 import {
 	AddEditLeadsForm,
 	LeadsTable,
