@@ -11,8 +11,7 @@ import {
 } from '@chakra-ui/react';
 
 export function BaseDrawer(props) {
-	const { title, useDisclosure } = props;
-	const { isOpen, onClose } = useDisclosure();
+	const { title, isOpen, onClose } = props;
 
 	return (
 		<Drawer isOpen={isOpen} placement="right" onClose={onClose}>
