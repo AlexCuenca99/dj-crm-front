@@ -1,5 +1,13 @@
 import React from 'react';
-import { Box, Flex, Heading, Link, Spacer, VStack } from '@chakra-ui/react';
+import {
+	Box,
+	Button,
+	Flex,
+	Heading,
+	Link,
+	Spacer,
+	VStack,
+} from '@chakra-ui/react';
 import { Link as ReactRouterLink } from 'react-router-dom';
 
 export function HeaderPage(props) {
@@ -17,9 +25,9 @@ export function HeaderPage(props) {
 					</Link>
 				</VStack>
 				<Spacer />
-				<Link onClick={action} as={ReactRouterLink}>
+				<Button onClick={action} as={ReactRouterLink}>
 					{actionTitle}
-				</Link>
+				</Button>
 			</Flex>
 		</Box>
 	);
