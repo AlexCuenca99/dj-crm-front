@@ -9,11 +9,13 @@ import {
 	Spinner,
 	StackDivider,
 	VStack,
+	useDisclosure,
 } from '@chakra-ui/react';
 import LeadsTable from '../../components/Main/Leads/LeadsTable/LeadsTable';
 
 export function LeadsPage() {
 	const { loading, error, leads, getLeads } = useLeads();
+	const { isOpen, onClose, onOpen } = useDisclosure();
 
 	useEffect(() => {
 		getLeads();
@@ -26,6 +28,7 @@ export function LeadsPage() {
 			<HeaderPage
 				title={'Leads'}
 				action={() => console.log('Action 1')}
+				useDisclosure={useDisclosure}
 				actionTitle={'Create a new lead'}
 				action2={() => console.log('Action 2')}
 				actionTitle2={'Filter by category'}

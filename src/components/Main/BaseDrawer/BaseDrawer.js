@@ -7,12 +7,12 @@ import {
 	DrawerOverlay,
 	DrawerContent,
 	DrawerCloseButton,
-	useDisclosure,
 	Button,
 } from '@chakra-ui/react';
 
 export function BaseDrawer(props) {
-	const { title, isOpen, onClose } = props;
+	const { title, useDisclosure } = props;
+	const { isOpen, onClose } = useDisclosure();
 
 	return (
 		<Drawer isOpen={isOpen} placement="right" onClose={onClose}>
