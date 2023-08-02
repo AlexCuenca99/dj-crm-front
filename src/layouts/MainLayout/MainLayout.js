@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { useAuth } from '../../hooks';
-import { LoginPage } from '../../pages/Main';
 import {
 	IconButton,
 	Avatar,
@@ -32,6 +30,9 @@ import {
 	FiChevronDown,
 } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
+
+import { useAuth } from '../../hooks';
+import { LoginPage } from '../../pages/Main';
 
 const LinkItems = [
 	{ name: 'Home', icon: FiHome, link: '/' },
@@ -115,6 +116,7 @@ const NavItem = ({ link, icon, children, ...rest }) => {
 const MobileNav = ({ onOpen, ...rest }) => {
 	const { auth, logout } = useAuth();
 	const navigate = useNavigate();
+
 	return (
 		<Flex
 			ml={{ base: 0, md: 60 }}
@@ -182,7 +184,14 @@ const MobileNav = ({ onOpen, ...rest }) => {
 							</MenuItem>
 							<MenuItem>Settings</MenuItem>
 							<MenuDivider />
-							<MenuItem onClick={logout}>Sign out</MenuItem>
+							<MenuItem
+								onClick={() => {
+									logout();
+									navigate('/login');
+								}}
+							>
+								Sign out
+							</MenuItem>
 						</MenuList>
 					</Menu>
 				</Flex>
