@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { map } from 'lodash';
@@ -20,25 +20,37 @@ import { genderOptions } from '../../../../utils/feeders';
 import './AddEditLeadsForm.scss';
 
 export function AddEditLeadsForm(props) {
-	const { lead } = props;
+	const { lead, setFormik, onCloseDrawer, onCloseAlertDialog, setShowToast } =
+		props;
 
 	const formik = useFormik({
 		initialValues: initialValues(lead),
 		validationSchema: Yup.object(validationSchema()),
 		validateOnBlur: true,
 		validateOnChange: false,
+		validateOnMount: true,
 
 		onSubmit: async (formValue) => {
 			try {
 				if (lead) console.log('Lead actualizado');
 				else {
-					console.log('Lead creado');
+					await console.log('Lead creado');
+					onCloseDrawer();
+					onCloseAlertDialog();
+					setShowToast(true);
 				}
 			} catch (error) {
 				console.log('Error in lead');
+				onCloseAlertDialog();
+				setShowToast(true);
 			}
 		},
 	});
+
+	useEffect(() => {
+		setFormik(formik);
+	}, [formik]);
+
 	return (
 		<form
 			id="leads-form"

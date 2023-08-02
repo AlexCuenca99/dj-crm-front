@@ -8,34 +8,42 @@ import {
 	DrawerContent,
 	DrawerCloseButton,
 	Button,
-	useDisclosure,
 } from '@chakra-ui/react';
 
 import { CustomAlertDialog } from '../index';
+import { isEmpty } from 'lodash';
 
 export function BaseDrawer(props) {
 	const {
 		loading,
-		title,
-		isOpenDrawer,
-		onCloseDrawer,
 		size,
+		title,
+		drawerDisclosure,
 		children,
 		action1,
 		alertTitle,
 		alertBody,
 		alertMainActionTitle,
 		alertMainActionColor,
+		formik,
+		alertDialogDisclosure,
 	} = props;
 
-	const { isOpen, onClose, onOpen } = useDisclosure();
+	// const { isOpen, onClose, onOpen } = useDisclosure();
+
+	const handleFormValidation = async () => {
+		try {
+			await formik.validateForm();
+			if (isEmpty(formik.errors)) alertDialogDisclosure.onOpen();
+		} catch (error) {}
+	};
 
 	return (
 		<>
 			<Drawer
-				isOpen={isOpenDrawer}
+				isOpen={drawerDisclosure.isOpen}
 				placement="right"
-				onClose={onCloseDrawer}
+				onClose={drawerDisclosure.onClose}
 				size={size}
 			>
 				<DrawerOverlay />
@@ -48,12 +56,12 @@ export function BaseDrawer(props) {
 							isDisabled={loading}
 							variant="outline"
 							mr={3}
-							onClick={onCloseDrawer}
+							onClick={drawerDisclosure.onClose}
 						>
 							Cancel
 						</Button>
 						<Button
-							onClick={onOpen}
+							onClick={handleFormValidation}
 							isLoading={loading}
 							colorScheme="blue"
 						>
@@ -64,8 +72,8 @@ export function BaseDrawer(props) {
 			</Drawer>
 			<CustomAlertDialog
 				loading={loading}
-				isOpenAlert={isOpen}
-				onCloseAlert={onClose}
+				isOpenAlert={alertDialogDisclosure.isOpen}
+				onCloseAlert={alertDialogDisclosure.onClose}
 				title={alertTitle}
 				body={alertBody}
 				mainActionTitle={alertMainActionTitle}

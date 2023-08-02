@@ -8,11 +8,13 @@ import {
 	StackDivider,
 	VStack,
 	useDisclosure,
+	useToast,
 } from '@chakra-ui/react';
 
 import { useLeads } from '../../hooks';
-import { HeaderPage, UnassignedLeadsCards } from '../../components/Main';
 import {
+	HeaderPage,
+	UnassignedLeadsCards,
 	AddEditLeadsForm,
 	LeadsTable,
 	BaseDrawer,
@@ -20,17 +22,45 @@ import {
 
 export function LeadsPage() {
 	const { loading, error, leads, getLeads } = useLeads();
-	const { onOpen, isOpen, onClose } = useDisclosure();
+
+	const toast = useToast();
+	const drawerDisclosure = useDisclosure();
+	const alertDialogDisclosure = useDisclosure();
+
 	const [drawerTitle, setDrawerTitle] = useState(null);
 	const [drawerContent, setDrawerContent] = useState(null);
+
 	const [alertTitle, setAlertTitle] = useState(null);
 	const [alertBody, setAlertBody] = useState(null);
 	const [alertMainActionTitle, setAlertMainActionTitle] = useState(null);
 	const [alertMainActionColor, setAlertMainActionColor] = useState(null);
 
+	const [formik, setFormik] = useState(null);
+
+	const [showToast, setShowToast] = useState(false);
+	const toastId = 'custom-toast';
+
 	useEffect(() => {
 		getLeads();
 	}, []);
+
+	// Handle show Chakra Toast
+	// Toast is only showing when state shoToast is true and is not active (avoid repeating)
+	useEffect(() => {
+		if (!toast.isActive(toastId) && showToast) {
+			toast({
+				toastId,
+				title: 'Hola',
+				description: 'Hola',
+				status: 'success',
+				duration: 8000,
+				isClosable: true,
+			});
+		}
+
+		// Return to false
+		setShowToast(false);
+	}, [toast, showToast]);
 
 	// Filter unassigned leads from server request
 	const unassignedLeads = filter(leads, { agent: null });
@@ -38,14 +68,21 @@ export function LeadsPage() {
 	// Create a new Lead
 	const addLead = () => {
 		setDrawerTitle('Create a new lead');
-		setDrawerContent(<AddEditLeadsForm />);
+		setDrawerContent(
+			<AddEditLeadsForm
+				setFormik={setFormik}
+				onCloseDrawer={drawerDisclosure.onClose}
+				onCloseAlertDialog={alertDialogDisclosure.onClose}
+				setShowToast={setShowToast}
+			/>
+		);
 		setAlertTitle('Create lead?');
 		setAlertBody(
 			'Are you sure you want to create a new lead with entered data?'
 		);
 		setAlertMainActionTitle('Create');
 		setAlertMainActionColor('blue');
-		onOpen();
+		drawerDisclosure.onOpen();
 	};
 
 	return (
@@ -53,7 +90,6 @@ export function LeadsPage() {
 			<HeaderPage
 				title={'Leads'}
 				action={addLead}
-				useDisclosure={useDisclosure}
 				actionTitle={'Create a new lead'}
 				action2={() => console.log('Action 2')}
 				actionTitle2={'Filter by category'}
@@ -79,14 +115,15 @@ export function LeadsPage() {
 				loading={loading}
 				size={'sm'}
 				title={drawerTitle}
-				isOpenDrawer={isOpen}
-				onCloseDrawer={onClose}
+				drawerDisclosure={drawerDisclosure}
 				children={drawerContent}
 				action1={() => console.log('Created lead')}
 				alertTitle={alertTitle}
 				alertBody={alertBody}
 				alertMainActionTitle={alertMainActionTitle}
 				alertMainActionColor={alertMainActionColor}
+				formik={formik}
+				alertDialogDisclosure={alertDialogDisclosure}
 			/>
 		</>
 	);
