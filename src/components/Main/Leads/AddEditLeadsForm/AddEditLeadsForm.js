@@ -16,12 +16,26 @@ import {
 } from '@chakra-ui/react';
 
 import { genderOptions } from '../../../../utils/feeders';
+import { useLeads } from '../../../../hooks';
 
 import './AddEditLeadsForm.scss';
 
 export function AddEditLeadsForm(props) {
-	const { lead, setFormik, onCloseDrawer, onCloseAlertDialog, setShowToast } =
-		props;
+	const {
+		lead,
+		setFormik,
+		onCloseAlertDialog,
+		onCloseDrawer,
+		setShowToast,
+		setFormLoading,
+		setToastTitle,
+		setToastDescription,
+		setToastStatus,
+		setToastDuration,
+		setToastIsClosable,
+	} = props;
+
+	const { createLead, loading } = useLeads();
 
 	const formik = useFormik({
 		initialValues: initialValues(lead),
@@ -33,19 +47,35 @@ export function AddEditLeadsForm(props) {
 		onSubmit: async (formValue) => {
 			try {
 				if (lead) console.log('Lead actualizado');
-				else {
-					await console.log('Lead creado');
-					onCloseDrawer();
-					onCloseAlertDialog();
-					setShowToast(true);
-				}
+				else await createLead(formValue);
+
+				onCloseAlertDialog();
+				onCloseDrawer();
+				setShowToast(true);
+
+				// Set Toast values
+				setToastTitle('Lead created');
+				setToastDescription("We've created your lead for you");
+				setToastStatus('success');
+				setToastDuration(7000);
+				setToastIsClosable(true);
 			} catch (error) {
-				console.log('Error in lead');
 				onCloseAlertDialog();
 				setShowToast(true);
+
+				// Set Toast values
+				setToastTitle('Lead could not be created');
+				setToastDescription(error.message);
+				setToastStatus('error');
+				setToastDuration(7000);
+				setToastIsClosable(true);
 			}
 		},
 	});
+
+	useEffect(() => {
+		setFormLoading(loading);
+	}, [loading]);
 
 	useEffect(() => {
 		setFormik(formik);

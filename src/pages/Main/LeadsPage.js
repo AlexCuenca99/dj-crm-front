@@ -36,8 +36,15 @@ export function LeadsPage() {
 	const [alertMainActionColor, setAlertMainActionColor] = useState(null);
 
 	const [formik, setFormik] = useState(null);
+	const [formLoading, setFormLoading] = useState(false);
 
 	const [showToast, setShowToast] = useState(false);
+	const [toastTitle, setToastTitle] = useState('');
+	const [toastDescription, setToastDescription] = useState('');
+	const [toastStatus, setToastStatus] = useState('');
+	const [toastDuration, setToastDuration] = useState(0);
+	const [toastIsClosable, setToastIsClosable] = useState(false);
+
 	const toastId = 'custom-toast';
 
 	useEffect(() => {
@@ -45,16 +52,16 @@ export function LeadsPage() {
 	}, []);
 
 	// Handle show Chakra Toast
-	// Toast is only showing when state shoToast is true and is not active (avoid repeating)
+	// Toast is only showing when state showToast is true and is not active (avoid repeating)
 	useEffect(() => {
 		if (!toast.isActive(toastId) && showToast) {
 			toast({
 				toastId,
-				title: 'Hola',
-				description: 'Hola',
-				status: 'success',
-				duration: 8000,
-				isClosable: true,
+				title: toastTitle,
+				description: toastDescription,
+				status: toastStatus,
+				duration: toastDuration,
+				isClosable: toastIsClosable,
 			});
 		}
 
@@ -74,6 +81,12 @@ export function LeadsPage() {
 				onCloseDrawer={drawerDisclosure.onClose}
 				onCloseAlertDialog={alertDialogDisclosure.onClose}
 				setShowToast={setShowToast}
+				setFormLoading={setFormLoading}
+				setToastTitle={setToastTitle}
+				setToastDescription={setToastDescription}
+				setToastStatus={setToastStatus}
+				setToastDuration={setToastDuration}
+				setToastIsClosable={setToastIsClosable}
 			/>
 		);
 		setAlertTitle('Create lead?');
@@ -112,7 +125,7 @@ export function LeadsPage() {
 				</VStack>
 			)}
 			<BaseDrawer
-				loading={loading}
+				loading={formLoading}
 				size={'sm'}
 				title={drawerTitle}
 				drawerDisclosure={drawerDisclosure}
