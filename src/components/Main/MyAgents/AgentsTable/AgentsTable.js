@@ -1,6 +1,7 @@
 import React from 'react';
 import { map } from 'lodash';
 import {
+	IconButton,
 	Table,
 	TableCaption,
 	TableContainer,
@@ -10,6 +11,7 @@ import {
 	Thead,
 	Tr,
 } from '@chakra-ui/react';
+import { FiArrowRight } from 'react-icons/fi';
 
 export function AgentsTable(props) {
 	const { agents } = props;
@@ -30,14 +32,31 @@ export function AgentsTable(props) {
 				<Tbody>
 					{map(agents, (agent, _) => (
 						<Tr key={agent.id}>
-							<Td>{`${agent.first_name} ${agent.last_name}`}</Td>
+							<Td>{`${agent.user.first_name} ${agent.user.last_name}`}</Td>
 							<Td>{agent.user.email}</Td>
 							<Td>{agent.user.address}</Td>
 							<Td>{agent.user.phone}</Td>
+							<Actions agent={agent} />
 						</Tr>
 					))}
 				</Tbody>
 			</Table>
 		</TableContainer>
+	);
+}
+
+function Actions(props) {
+	const { agent } = props;
+
+	return (
+		<Td>
+			<IconButton
+				aria-label="See details"
+				icon={<FiArrowRight size={17} />}
+				onClick={() =>
+					console.log('See details of ', agent.user.first_name)
+				}
+			/>
+		</Td>
 	);
 }
