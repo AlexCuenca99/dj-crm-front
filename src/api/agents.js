@@ -6,7 +6,6 @@ export async function getAgentsApi(token) {
 		const url = `${BASE_API}/agents/`;
 		const params = {
 			headers: {
-				'Content-Type': 'application/json',
 				Authorization: `Bearer ${token}`,
 			},
 		};
