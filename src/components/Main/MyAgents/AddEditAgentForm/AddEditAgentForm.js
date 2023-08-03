@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import * as Yup from 'yup';
+import { map } from 'lodash';
 import { useFormik } from 'formik';
 import {
 	AbsoluteCenter,
@@ -14,11 +15,26 @@ import {
 	Select,
 } from '@chakra-ui/react';
 
+import { useAgent } from 'hooks';
 import { genderOptions } from 'utils/feeders';
-import { map } from 'lodash';
 
-export function AgentAddEditForm(props) {
-	const { agent } = props;
+export function AddEditAgentForm(props) {
+	const {
+		agent,
+		setFormik,
+		onCloseAlertDialog,
+		onCloseDrawer,
+		setShowToast,
+		setFormLoading,
+		setToastTitle,
+		setToastDescription,
+		setToastStatus,
+		setToastDuration,
+		setToastIsClosable,
+		onRefetch,
+	} = props;
+
+	const { loading } = useAgent();
 
 	const formik = useFormik({
 		initialValues: initialValues(agent),
@@ -29,18 +45,58 @@ export function AgentAddEditForm(props) {
 
 		onSubmit: async (formValue) => {
 			try {
-				if (agent) console.log('Agent updated', formValue);
-				else console.log('Agente created', formValue);
+				if (agent) {
+					console.log('Agent Updated, ', formValue);
+
+					setToastTitle('Agent updated');
+					setToastDescription("We've updated the agent for you");
+				} else {
+					console.log('Agent created, ', formValue);
+
+					setToastTitle('Agent created');
+					setToastDescription("We've created your agent for you");
+				}
+
+				onCloseAlertDialog();
+				onCloseDrawer();
+				setShowToast(true);
+
+				// Set Toast values
+				setToastStatus('success');
+				setToastDuration(6000);
+				setToastIsClosable(true);
+				onRefetch();
 			} catch (error) {
-				console.log('Oops, something went wrong');
+				onCloseAlertDialog();
+				setShowToast(true);
+
+				// Set Toast values
+				setToastTitle(
+					agent
+						? 'Agent could not be updated'
+						: 'Agent could not be created'
+				);
+				setToastDescription(error.message);
+				setToastStatus('error');
+				setToastDuration(7000);
+				setToastIsClosable(true);
 			}
 		},
 	});
+	useEffect(() => {
+		setFormLoading(loading);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [loading]);
+
+	useEffect(() => {
+		setFormik(formik);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [formik]);
 
 	return (
 		<form
-			id="leads-form"
-			className="add-edit-lead-form"
+			id="agent-form"
+			className="add-edit-agent-form"
 			onSubmit={formik.handleSubmit}
 		>
 			<Flex>
@@ -221,35 +277,6 @@ export function AgentAddEditForm(props) {
 					<FormHelperText>Enter the phone</FormHelperText>
 				) : (
 					<FormErrorMessage>{formik.errors.phone}</FormErrorMessage>
-				)}
-			</FormControl>
-			<FormControl
-				isInvalid={formik.touched.agent && formik.errors.agent}
-				mt="5%"
-			>
-				<FormLabel
-					htmlFor="agent"
-					className="add-edit-lead-form__secondary-label"
-				>
-					Agent
-				</FormLabel>
-				<Select
-					placeholder="Select and agent"
-					size="sm"
-					onBlur={formik.handleBlur}
-					defaultValue={formik.values.gender}
-					onChange={(event) =>
-						formik.setFieldValue('agent', event.target.value)
-					}
-				>
-					<option key={0} value={0}>
-						Agent 1
-					</option>
-				</Select>
-				{!formik.errors.agent ? (
-					<FormHelperText>Select the agent</FormHelperText>
-				) : (
-					<FormErrorMessage>{formik.errors.agent}</FormErrorMessage>
 				)}
 			</FormControl>
 		</form>
