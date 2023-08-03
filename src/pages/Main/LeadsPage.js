@@ -130,7 +130,6 @@ export function LeadsPage() {
 				title={drawerTitle}
 				drawerDisclosure={drawerDisclosure}
 				children={drawerContent}
-				action1={() => console.log('Created lead')}
 				alertTitle={alertTitle}
 				alertBody={alertBody}
 				alertMainActionTitle={alertMainActionTitle}

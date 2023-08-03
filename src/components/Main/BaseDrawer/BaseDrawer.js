@@ -20,7 +20,6 @@ export function BaseDrawer(props) {
 		title,
 		drawerDisclosure,
 		children,
-		action1,
 		alertTitle,
 		alertBody,
 		alertMainActionTitle,
