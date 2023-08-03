@@ -16,9 +16,9 @@ export function useLeads() {
 			setLeads(response);
 			setLoading(false);
 		} catch (error) {
-			console.log(error);
 			setLoading(false);
 			setError(error);
+			throw error;
 		}
 	};
 
