@@ -47,18 +47,25 @@ export function AddEditLeadsForm(props) {
 
 		onSubmit: async (formValue) => {
 			try {
-				if (lead) console.log('Lead actualizado');
-				else await createLead(formValue);
+				if (lead) {
+					console.log('Lead actualizado');
+
+					setToastTitle('Lead updated');
+					setToastDescription("We've updated the lead for you");
+				} else {
+					await createLead(formValue);
+
+					setToastTitle('Lead created');
+					setToastDescription("We've created your lead for you");
+				}
 
 				onCloseAlertDialog();
 				onCloseDrawer();
 				setShowToast(true);
 
 				// Set Toast values
-				setToastTitle('Lead created');
-				setToastDescription("We've created your lead for you");
 				setToastStatus('success');
-				setToastDuration(7000);
+				setToastDuration(6000);
 				setToastIsClosable(true);
 				onRefetch();
 			} catch (error) {
@@ -66,7 +73,11 @@ export function AddEditLeadsForm(props) {
 				setShowToast(true);
 
 				// Set Toast values
-				setToastTitle('Lead could not be created');
+				setToastTitle(
+					lead
+						? 'Lead could not be updated'
+						: 'Lead could not be created'
+				);
 				setToastDescription(error.message);
 				setToastStatus('error');
 				setToastDuration(7000);

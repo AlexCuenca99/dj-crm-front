@@ -106,7 +106,6 @@ export function LeadsPage() {
 
 	// Update a lead
 	const updateLead = (leadData) => {
-		console.log(leadData);
 		setDrawerTitle('Update a lead');
 		setDrawerContent(
 			<AddEditLeadsForm
