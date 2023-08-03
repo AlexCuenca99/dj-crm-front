@@ -1,7 +1,15 @@
+import React, { useEffect } from 'react';
+
+import { useAgent } from 'hooks/useAgent';
 import { HeaderPage } from 'components/Main';
-import React from 'react';
 
 export function AgentsPage() {
+	const { agents, loading, error, getAgents } = useAgent();
+
+	useEffect(() => {
+		getAgents();
+	}, []);
+
 	const addAgent = () => {
 		console.log('Add agent');
 	};
