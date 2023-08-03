@@ -15,8 +15,8 @@ import {
 	Box,
 } from '@chakra-ui/react';
 
-import { genderOptions } from '../../../../utils/feeders';
-import { useLeads } from '../../../../hooks';
+import { genderOptions } from 'utils/feeders';
+import { useLeads } from 'hooks';
 
 import './AddEditLeadsForm.scss';
 
@@ -33,6 +33,7 @@ export function AddEditLeadsForm(props) {
 		setToastStatus,
 		setToastDuration,
 		setToastIsClosable,
+		onRefetch,
 	} = props;
 
 	const { createLead, loading } = useLeads();
@@ -59,6 +60,7 @@ export function AddEditLeadsForm(props) {
 				setToastStatus('success');
 				setToastDuration(7000);
 				setToastIsClosable(true);
+				onRefetch();
 			} catch (error) {
 				onCloseAlertDialog();
 				setShowToast(true);

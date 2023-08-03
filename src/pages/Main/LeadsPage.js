@@ -11,14 +11,14 @@ import {
 	useToast,
 } from '@chakra-ui/react';
 
-import { useLeads } from '../../hooks';
+import { useLeads } from 'hooks';
 import {
 	HeaderPage,
 	UnassignedLeadsCards,
 	AddEditLeadsForm,
 	LeadsTable,
 	BaseDrawer,
-} from '../../components/Main';
+} from 'components/Main';
 
 export function LeadsPage() {
 	const { loading, error, leads, getLeads } = useLeads();
