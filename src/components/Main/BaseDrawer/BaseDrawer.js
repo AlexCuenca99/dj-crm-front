@@ -10,7 +10,6 @@ import {
 	Button,
 } from '@chakra-ui/react';
 
-import { CustomAlertDialog } from '../index';
 import { isEmpty } from 'lodash';
 
 export function BaseDrawer(props) {
@@ -20,10 +19,6 @@ export function BaseDrawer(props) {
 		title,
 		drawerDisclosure,
 		children,
-		alertTitle,
-		alertBody,
-		alertMainActionTitle,
-		alertMainActionColor,
 		formik,
 		alertDialogDisclosure,
 	} = props;
@@ -69,15 +64,6 @@ export function BaseDrawer(props) {
 					</DrawerFooter>
 				</DrawerContent>
 			</Drawer>
-			<CustomAlertDialog
-				loading={loading}
-				isOpenAlert={alertDialogDisclosure.isOpen}
-				onCloseAlert={alertDialogDisclosure.onClose}
-				title={alertTitle}
-				body={alertBody}
-				mainActionTitle={alertMainActionTitle}
-				mainActionColor={alertMainActionColor}
-			/>
 		</>
 	);
 }
@@ -85,3 +71,4 @@ export function BaseDrawer(props) {
 BaseDrawer.defaultProps = {
 	size: 'xs',
 };
+//

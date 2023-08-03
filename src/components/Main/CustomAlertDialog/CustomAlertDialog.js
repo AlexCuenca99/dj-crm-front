@@ -12,6 +12,7 @@ import {
 
 export function CustomAlertDialog(props) {
 	const {
+		action,
 		loading,
 		title,
 		body,
@@ -40,11 +41,9 @@ export function CustomAlertDialog(props) {
 							Cancel
 						</Button>
 						<Button
-							form="leads-form"
-							type="submit"
+							onClick={action}
 							colorScheme={mainActionColor}
 							isLoading={loading}
-							//onClick={onCloseAlert}
 							ml={3}
 						>
 							{mainActionTitle}

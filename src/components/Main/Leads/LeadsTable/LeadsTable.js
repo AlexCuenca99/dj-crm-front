@@ -16,7 +16,7 @@ import { FiEdit2 } from 'react-icons/fi';
 import { RiDeleteBin5Line } from 'react-icons/ri';
 
 export function LeadsTable(props) {
-	const { leads, updateLead } = props;
+	const { leads, updateLead, deleteLead } = props;
 
 	return (
 		<TableContainer>
@@ -53,7 +53,11 @@ export function LeadsTable(props) {
 									? lead.agent.user.first_name
 									: 'No yet assigned'}
 							</Td>
-							<Actions lead={lead} updateLead={updateLead} />
+							<Actions
+								lead={lead}
+								updateLead={updateLead}
+								deleteLead={deleteLead}
+							/>
 						</Tr>
 					))}
 				</Tbody>
@@ -63,7 +67,7 @@ export function LeadsTable(props) {
 }
 
 function Actions(props) {
-	const { lead, updateLead } = props;
+	const { lead, updateLead, deleteLead } = props;
 
 	return (
 		<Td>
@@ -75,7 +79,7 @@ function Actions(props) {
 			<IconButton
 				aria-label="Delete lead"
 				icon={<RiDeleteBin5Line size={17} />}
-				onClick={() => console.log('Edit', lead.first_name)}
+				onClick={() => deleteLead(lead.id)}
 			/>
 		</Td>
 	);
