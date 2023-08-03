@@ -334,8 +334,8 @@ function validationSchema() {
 			.max(100)
 			.required('Address is a required field'),
 		phone: Yup.string()
-			.min(10)
-			.max(20)
+			.matches(/^\d+$/, 'Phone should have digits only')
+			.length(10, 'Phone must has 10 numbers')
 			.required('Phone is a required field'),
 		agent: Yup.number(),
 	};
