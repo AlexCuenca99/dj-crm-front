@@ -44,12 +44,13 @@ export function LeadsPage() {
 	const [toastStatus, setToastStatus] = useState('');
 	const [toastDuration, setToastDuration] = useState(0);
 	const [toastIsClosable, setToastIsClosable] = useState(false);
-
 	const toastId = 'custom-toast';
+
+	const [refetch, setRefecth] = useState(false);
 
 	useEffect(() => {
 		getLeads();
-	}, []);
+	}, [refetch]);
 
 	// Handle show Chakra Toast
 	// Toast is only showing when state showToast is true and is not active (avoid repeating)
@@ -72,6 +73,10 @@ export function LeadsPage() {
 	// Filter unassigned leads from server request
 	const unassignedLeads = filter(leads, { agent: null });
 
+	const onRefetch = () => {
+		setRefecth((prev) => !prev);
+	};
+
 	// Create a new Lead
 	const addLead = () => {
 		setDrawerTitle('Create a new lead');
@@ -87,6 +92,7 @@ export function LeadsPage() {
 				setToastStatus={setToastStatus}
 				setToastDuration={setToastDuration}
 				setToastIsClosable={setToastIsClosable}
+				onRefetch={onRefetch}
 			/>
 		);
 		setAlertTitle('Create lead?');
