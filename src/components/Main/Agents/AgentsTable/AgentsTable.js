@@ -1,3 +1,5 @@
+import React from 'react';
+import { map } from 'lodash';
 import {
 	Table,
 	TableCaption,
@@ -8,8 +10,6 @@ import {
 	Thead,
 	Tr,
 } from '@chakra-ui/react';
-import { map } from 'lodash';
-import React from 'react';
 
 export function AgentsTable(props) {
 	const { agents } = props;
@@ -31,9 +31,9 @@ export function AgentsTable(props) {
 					{map(agents, (agent, _) => (
 						<Tr key={agent.id}>
 							<Td>{`${agent.first_name} ${agent.last_name}`}</Td>
-							<Td>{agent.email}</Td>
-							<Td>{agent.address}</Td>
-							<Td>{agent.phone}</Td>
+							<Td>{agent.user.email}</Td>
+							<Td>{agent.user.address}</Td>
+							<Td>{agent.user.phone}</Td>
 						</Tr>
 					))}
 				</Tbody>
