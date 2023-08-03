@@ -6,3 +6,4 @@ export * from './HeaderPage';
 export * from './Leads';
 export * from './BaseDrawer';
 export * from './CustomAlertDialog';
+export * from './Agents';
