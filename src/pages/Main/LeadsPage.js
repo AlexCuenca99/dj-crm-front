@@ -18,10 +18,11 @@ import {
 	AddEditLeadsForm,
 	LeadsTable,
 	BaseDrawer,
+	CustomAlertDialog,
 } from 'components/Main';
 
 export function LeadsPage() {
-	const { loading, error, leads, getLeads } = useLeads();
+	const { loading, error, leads, getLeads, deleteLead } = useLeads();
 
 	const toast = useToast();
 	const drawerDisclosure = useDisclosure();
@@ -47,6 +48,8 @@ export function LeadsPage() {
 	const toastId = 'custom-toast';
 
 	const [refetch, setRefecth] = useState(false);
+	const [isDeleteAction, setIsDeleteAction] = useState(false);
+	const [leadToDeleteId, setLeadToDeleteId] = useState(null);
 
 	useEffect(() => {
 		getLeads();
@@ -132,6 +135,43 @@ export function LeadsPage() {
 		drawerDisclosure.onOpen();
 	};
 
+	// Delete a lead
+	const confirmDeleteLead = (leadId) => {
+		setAlertTitle('Delete lead?');
+		setAlertBody('Are you sure you want to delete the selected lead?');
+		setAlertMainActionTitle('Delete');
+		setAlertMainActionColor('red');
+		setIsDeleteAction(true);
+		setLeadToDeleteId(leadId);
+		alertDialogDisclosure.onOpen();
+	};
+
+	const onDeleteLead = async () => {
+		try {
+			await deleteLead(leadToDeleteId);
+			setToastTitle('Lead deleted');
+			setToastDescription("We've deleted the lead for you");
+			alertDialogDisclosure.onClose();
+			setShowToast(true);
+
+			// Set Toast values
+			setToastStatus('success');
+			setToastDuration(6000);
+			setToastIsClosable(true);
+			onRefetch();
+		} catch (error) {
+			alertDialogDisclosure.onClose();
+			setShowToast(true);
+
+			// Set Toast values
+			setToastTitle('Lead could not be deleted');
+			setToastDescription(error.message);
+			setToastStatus('error');
+			setToastDuration(7000);
+			setToastIsClosable(true);
+		}
+	};
+
 	return (
 		<>
 			<HeaderPage
@@ -154,7 +194,11 @@ export function LeadsPage() {
 					spacing={5}
 					alignItems="start"
 				>
-					<LeadsTable leads={leads} updateLead={updateLead} />
+					<LeadsTable
+						leads={leads}
+						updateLead={updateLead}
+						deleteLead={confirmDeleteLead}
+					/>
 					<UnassignedLeadsCards leads={unassignedLeads} />
 				</VStack>
 			)}
@@ -164,12 +208,19 @@ export function LeadsPage() {
 				title={drawerTitle}
 				drawerDisclosure={drawerDisclosure}
 				children={drawerContent}
-				alertTitle={alertTitle}
-				alertBody={alertBody}
-				alertMainActionTitle={alertMainActionTitle}
-				alertMainActionColor={alertMainActionColor}
 				formik={formik}
 				alertDialogDisclosure={alertDialogDisclosure}
+			/>
+
+			<CustomAlertDialog
+				action={isDeleteAction ? onDeleteLead : formik?.handleSubmit}
+				loading={isDeleteAction ? loading : formLoading}
+				isOpenAlert={alertDialogDisclosure.isOpen}
+				onCloseAlert={alertDialogDisclosure.onClose}
+				title={alertTitle}
+				body={alertBody}
+				mainActionTitle={alertMainActionTitle}
+				mainActionColor={alertMainActionColor}
 			/>
 		</>
 	);

@@ -12,7 +12,7 @@ export async function getLeadsApi(token) {
 		};
 		const response = await fetch(url, params);
 
-		if (response.status !== 200) {
+		if (!response.ok) {
 			const result = await response.json();
 			const errorValues = valuesIn(result);
 			throw new Error(errorValues);
@@ -39,7 +39,7 @@ export async function createLeadApi(token, formValue) {
 
 		const response = await fetch(url, params);
 
-		if (response.status !== 200) {
+		if (!response.ok) {
 			const result = await response.json();
 			const errorValues = valuesIn(result);
 			throw new Error(errorValues);
@@ -66,7 +66,7 @@ export async function updateLeadApi(token, id, formValue) {
 
 		const response = await fetch(url, params);
 
-		if (response.status !== 200) {
+		if (!response.ok) {
 			const result = await response.json();
 			const errorValues = valuesIn(result);
 			throw new Error(errorValues);
@@ -75,6 +75,29 @@ export async function updateLeadApi(token, id, formValue) {
 		const result = await response.json();
 
 		return result;
+	} catch (error) {
+		throw error;
+	}
+}
+
+export async function deleteLeadApi(token, id) {
+	try {
+		const url = `${BASE_API}/leads/${id}/`;
+		const params = {
+			method: 'DELETE',
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		};
+		const response = await fetch(url, params);
+
+		if (!response.ok) {
+			const result = await response.json();
+			const errorValues = valuesIn(result);
+			throw new Error(errorValues);
+		}
+
+		return response;
 	} catch (error) {
 		throw error;
 	}

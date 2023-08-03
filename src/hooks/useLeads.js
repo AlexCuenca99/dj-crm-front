@@ -1,5 +1,10 @@
 import { useState } from 'react';
-import { getLeadsApi, createLeadApi, updateLeadApi } from '../api/leads';
+import {
+	getLeadsApi,
+	createLeadApi,
+	updateLeadApi,
+	deleteLeadApi,
+} from '../api/leads';
 import { useAuth } from '../hooks';
 
 export function useLeads() {
@@ -46,6 +51,17 @@ export function useLeads() {
 		}
 	};
 
+	const deleteLead = async (id) => {
+		try {
+			setLoading(true);
+			await deleteLeadApi(auth.token, id);
+			setLoading(false);
+		} catch (error) {
+			setLoading(false);
+			setError(error);
+			throw error;
+		}
+	};
 	return {
 		loading,
 		error,
@@ -54,5 +70,6 @@ export function useLeads() {
 		getLeads,
 		createLead,
 		updateLead,
+		deleteLead,
 	};
 }
