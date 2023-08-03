@@ -77,10 +77,12 @@ export function AddEditLeadsForm(props) {
 
 	useEffect(() => {
 		setFormLoading(loading);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [loading]);
 
 	useEffect(() => {
 		setFormik(formik);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [formik]);
 
 	return (
@@ -200,6 +202,7 @@ export function AddEditLeadsForm(props) {
 					<Select
 						placeholder="Select option"
 						size="sm"
+						defaultValue={formik.values.gender}
 						onChange={(event) =>
 							formik.setFieldValue('gender', event.target.value)
 						}
@@ -327,17 +330,16 @@ function validationSchema() {
 			.max(25, 'Max length is 25')
 			.required('Last name is a required field'),
 		birth: Yup.date().max(new Date(), 'Birth must be earlier than today'),
-		gender: Yup.number()
-			.min(0)
-			.max(3)
+		gender: Yup.string()
+			.length(1, 'Gender must have length of 1')
 			.required('Gender is a required field'),
 		address: Yup.string()
 			.min(3)
 			.max(100)
 			.required('Address is a required field'),
 		phone: Yup.string()
-			.matches(/^\d+$/, 'Phone should have digits only')
-			.length(10, 'Phone must has 10 numbers')
+			.matches(/^\d+$/, 'Phone should have digits and hypens only')
+			.length(10, 'Phone must have 10 numbers')
 			.required('Phone is a required field'),
 		agent: Yup.number(),
 	};
