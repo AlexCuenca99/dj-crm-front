@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { getLeadsApi, createLeadApi } from '../api/leads';
+import { getLeadsApi, createLeadApi, updateLeadApi } from '../api/leads';
 import { useAuth } from '../hooks';
 
 export function useLeads() {
@@ -33,6 +33,19 @@ export function useLeads() {
 			throw error;
 		}
 	};
+
+	const updateLead = async (id, data) => {
+		try {
+			setLoading(true);
+			await updateLeadApi(auth.token, id, data);
+			setLoading(false);
+		} catch (error) {
+			setLoading(false);
+			setError(error);
+			throw error;
+		}
+	};
+
 	return {
 		loading,
 		error,
@@ -40,5 +53,6 @@ export function useLeads() {
 
 		getLeads,
 		createLead,
+		updateLead,
 	};
 }

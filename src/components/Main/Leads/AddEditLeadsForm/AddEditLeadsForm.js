@@ -36,7 +36,7 @@ export function AddEditLeadsForm(props) {
 		onRefetch,
 	} = props;
 
-	const { createLead, loading } = useLeads();
+	const { createLead, updateLead, loading } = useLeads();
 
 	const formik = useFormik({
 		initialValues: initialValues(lead),
@@ -48,7 +48,7 @@ export function AddEditLeadsForm(props) {
 		onSubmit: async (formValue) => {
 			try {
 				if (lead) {
-					console.log('Lead actualizado');
+					await updateLead(lead.id, formValue);
 
 					setToastTitle('Lead updated');
 					setToastDescription("We've updated the lead for you");
@@ -296,6 +296,7 @@ export function AddEditLeadsForm(props) {
 					placeholder="Select and agent"
 					size="sm"
 					onBlur={formik.handleBlur}
+					defaultValue={formik.values.gender}
 					onChange={(event) =>
 						formik.setFieldValue('agent', event.target.value)
 					}
@@ -352,6 +353,6 @@ function validationSchema() {
 			.matches(/^\d+$/, 'Phone should have digits and hypens only')
 			.length(10, 'Phone must have 10 numbers')
 			.required('Phone is a required field'),
-		agent: Yup.number(),
+		agent: Yup.string(),
 	};
 }
