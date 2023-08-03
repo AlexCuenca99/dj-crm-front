@@ -104,6 +104,35 @@ export function LeadsPage() {
 		drawerDisclosure.onOpen();
 	};
 
+	// Update a lead
+	const updateLead = (leadData) => {
+		console.log(leadData);
+		setDrawerTitle('Update a lead');
+		setDrawerContent(
+			<AddEditLeadsForm
+				lead={leadData}
+				setFormik={setFormik}
+				onCloseDrawer={drawerDisclosure.onClose}
+				onCloseAlertDialog={alertDialogDisclosure.onClose}
+				setShowToast={setShowToast}
+				setFormLoading={setFormLoading}
+				setToastTitle={setToastTitle}
+				setToastDescription={setToastDescription}
+				setToastStatus={setToastStatus}
+				setToastDuration={setToastDuration}
+				setToastIsClosable={setToastIsClosable}
+				onRefetch={onRefetch}
+			/>
+		);
+		setAlertTitle('Update lead?');
+		setAlertBody(
+			'Are you sure you want to update the lead with entered data?'
+		);
+		setAlertMainActionTitle('Update');
+		setAlertMainActionColor('blue');
+		drawerDisclosure.onOpen();
+	};
+
 	return (
 		<>
 			<HeaderPage
@@ -126,7 +155,7 @@ export function LeadsPage() {
 					spacing={5}
 					alignItems="start"
 				>
-					<LeadsTable leads={leads} />
+					<LeadsTable leads={leads} updateLead={updateLead} />
 					<UnassignedLeadsCards leads={unassignedLeads} />
 				</VStack>
 			)}
