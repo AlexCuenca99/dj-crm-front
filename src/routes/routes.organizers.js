@@ -1,4 +1,4 @@
-import { HomeAuthPage, LeadsDetailsPage, LeadsPage } from '../pages/Main';
+import { LeadsDetailsPage, LeadsPage, AgentsPage } from '../pages/Main';
 import { MainLayout } from '../layouts';
 
 const routesOrganizers = [
@@ -15,7 +15,7 @@ const routesOrganizers = [
 	{
 		path: '/users/agents',
 		layout: MainLayout,
-		component: HomeAuthPage,
+		component: AgentsPage,
 	},
 ];
 
