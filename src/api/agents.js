@@ -28,13 +28,15 @@ export async function getAgentsApi(token) {
 
 export async function createAgentsApi(token, formValue) {
 	try {
+		const formNestedValue = { user: formValue };
+
 		const url = `${BASE_API}/agents/`;
 		const params = {
 			headers: {
 				'Content-Type': 'application/json',
 				Authorization: `Bearer ${token}`,
 			},
-			body: JSON.stringify(formValue),
+			body: JSON.stringify(formNestedValue),
 		};
 		const response = await fetch(url, params);
 
