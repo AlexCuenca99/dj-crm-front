@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { getAgentsApi } from 'api/agents';
+import { createAgentsApi, getAgentsApi } from 'api/agents';
 import { useAuth } from '../hooks';
 
 export function useAgent() {
@@ -22,11 +22,24 @@ export function useAgent() {
 		}
 	};
 
+	const createAgent = async (data) => {
+		try {
+			setLoading(true);
+			await createAgentsApi(auth.token, data);
+			setLoading(false);
+		} catch (error) {
+			setLoading(false);
+			setError(error);
+			throw error;
+		}
+	};
+
 	return {
 		loading,
 		error,
 		agents,
 
 		getAgents,
+		createAgent,
 	};
 }
