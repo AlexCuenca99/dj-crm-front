@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { map } from 'lodash';
 import { useFormik } from 'formik';
 import {
 	AbsoluteCenter,
 	Box,
+	Button,
 	Divider,
 	Flex,
 	FormControl,
@@ -12,6 +13,8 @@ import {
 	FormHelperText,
 	FormLabel,
 	Input,
+	InputGroup,
+	InputRightElement,
 	Select,
 } from '@chakra-ui/react';
 
@@ -34,7 +37,9 @@ export function AddEditAgentForm(props) {
 		onRefetch,
 	} = props;
 
-	const { loading } = useAgent();
+	const { loading, createAgent } = useAgent();
+
+	const [showPassword, setShowPassword] = useState(false);
 
 	const formik = useFormik({
 		initialValues: initialValues(agent),
@@ -51,7 +56,7 @@ export function AddEditAgentForm(props) {
 					setToastTitle('Agent updated');
 					setToastDescription("We've updated the agent for you");
 				} else {
-					console.log('Agent created, ', formValue);
+					await createAgent(formValue);
 
 					setToastTitle('Agent created');
 					setToastDescription("We've created your agent for you");
@@ -92,6 +97,10 @@ export function AddEditAgentForm(props) {
 		setFormik(formik);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [formik]);
+
+	const handleShowPassword = () => {
+		setShowPassword((prev) => !prev);
+	};
 
 	return (
 		<form
@@ -161,6 +170,72 @@ export function AddEditAgentForm(props) {
 					<FormHelperText>Enter lead's email</FormHelperText>
 				) : (
 					<FormErrorMessage>{formik.errors.email}</FormErrorMessage>
+				)}
+			</FormControl>
+			<FormControl
+				isInvalid={formik.touched.password && formik.errors.password}
+				mt="5%"
+			>
+				<FormLabel htmlFor="password">Password</FormLabel>
+				<InputGroup>
+					<Input
+						pr="4.5rem"
+						id="password"
+						type={showPassword ? 'text' : 'password'}
+						value={formik.values.password}
+						onBlur={formik.handleBlur}
+						onChange={formik.handleChange}
+					/>
+					<InputRightElement width="4.5rem">
+						<Button
+							h="1.75rem"
+							size="sm"
+							onClick={handleShowPassword}
+						>
+							{showPassword ? 'Hide' : 'Show'}
+						</Button>
+					</InputRightElement>
+				</InputGroup>
+				{!formik.errors.password ? (
+					<FormHelperText>Enter agent's password</FormHelperText>
+				) : (
+					<FormErrorMessage>
+						{formik.errors.password}
+					</FormErrorMessage>
+				)}
+			</FormControl>
+			<FormControl
+				isInvalid={
+					formik.touched.re_password && formik.errors.re_password
+				}
+				mt="5%"
+			>
+				<FormLabel htmlFor="re_password">Retype password</FormLabel>
+				<InputGroup>
+					<Input
+						pr="4.5rem"
+						id="re_password"
+						type={showPassword ? 'text' : 'password'}
+						value={formik.values.re_password}
+						onBlur={formik.handleBlur}
+						onChange={formik.handleChange}
+					/>
+					<InputRightElement width="4.5rem">
+						<Button
+							h="1.75rem"
+							size="sm"
+							onClick={handleShowPassword}
+						>
+							{showPassword ? 'Hide' : 'Show'}
+						</Button>
+					</InputRightElement>
+				</InputGroup>
+				{!formik.errors.re_password ? (
+					<FormHelperText>Retype agent's password</FormHelperText>
+				) : (
+					<FormErrorMessage>
+						{formik.errors.re_password}
+					</FormErrorMessage>
 				)}
 			</FormControl>
 			<Box position="relative" padding="10">
@@ -292,6 +367,9 @@ function initialValues(data) {
 		gender: data?.gender || '',
 		address: data?.address || '',
 		phone: data?.phone || '',
+		password: '',
+		re_password: '',
+		role: data?.role || 'AGT',
 	};
 }
 
@@ -320,5 +398,18 @@ function validationSchema() {
 			.matches(/^\d+$/, 'Phone should have digits and hypens only')
 			.length(10, 'Phone must have 10 numbers')
 			.required('Phone is a required field'),
+		password: Yup.string()
+			.min(8, 'Min length is 8')
+			.max(20, 'Max. length is 20')
+			.required('Password is a required field'),
+		re_password: Yup.string()
+			.min(8, 'Min length is 8')
+			.max(20, 'Max. length is 20')
+			.oneOf([Yup.ref('password'), null], 'Passwords must match')
+			.required('Retype password is a required field'),
+		role: Yup.string()
+			.length(3, 'Role must have 3 characters')
+			.oneOf(['AGT', 'ORG'])
+			.required('Role is a required field'),
 	};
 }
