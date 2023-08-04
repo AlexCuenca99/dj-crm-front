@@ -32,6 +32,7 @@ export async function createAgentsApi(token, formValue) {
 
 		const url = `${BASE_API}/agents/`;
 		const params = {
+			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 				Authorization: `Bearer ${token}`,
