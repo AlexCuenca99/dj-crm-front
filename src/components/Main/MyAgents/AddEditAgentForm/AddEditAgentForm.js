@@ -391,15 +391,15 @@ export function AddEditAgentForm(props) {
 
 function initialValues(data) {
 	return {
-		email: data?.email || 'lorem@lorem',
-		first_name: data?.first_name || 'lorem',
-		last_name: data?.last_name || 'ipsum',
+		email: data?.email || '',
+		first_name: data?.first_name || '',
+		last_name: data?.last_name || '',
 		birth: data?.birth || '',
-		gender: data?.gender || 'M',
-		address: data?.address || 'Lorem Ipsum',
-		phone: data?.phone || '0000000000',
-		password: 'loremipsum',
-		re_password: 'loremipsum',
+		gender: data?.gender || '',
+		address: data?.address || '',
+		phone: data?.phone || '',
+		password: '',
+		re_password: '',
 		role: data?.role || 'AGT',
 		username: data?.username || '',
 	};
