@@ -1,6 +1,7 @@
 import React from 'react';
 import { map } from 'lodash';
 import {
+	Avatar,
 	IconButton,
 	Table,
 	TableCaption,
@@ -15,13 +16,13 @@ import { FiArrowRight } from 'react-icons/fi';
 
 export function AgentsTable(props) {
 	const { agents } = props;
-
 	return (
 		<TableContainer>
 			<Table variant="simple" size="sm">
 				<TableCaption>Agent users</TableCaption>
 				<Thead>
 					<Tr>
+						<Th></Th>
 						<Th>Full name</Th>
 						<Th>Email</Th>
 						<Th>Address</Th>
@@ -32,6 +33,14 @@ export function AgentsTable(props) {
 				<Tbody>
 					{map(agents, (agent, _) => (
 						<Tr key={agent.id}>
+							<Td>
+								{
+									<Avatar
+										name={`${agent.user.first_name}${agent.user.last_name}`}
+										src={agent.user.photo}
+									/>
+								}
+							</Td>
 							<Td>{`${agent.user.first_name} ${agent.user.last_name}`}</Td>
 							<Td>{agent.user.email}</Td>
 							<Td>{agent.user.address}</Td>
