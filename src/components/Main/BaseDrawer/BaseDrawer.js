@@ -9,6 +9,7 @@ import {
 	DrawerCloseButton,
 	Button,
 } from '@chakra-ui/react';
+import { setNestedObjectValues } from 'formik';
 
 import { isEmpty } from 'lodash';
 
@@ -27,7 +28,8 @@ export function BaseDrawer(props) {
 
 	const handleFormValidation = async () => {
 		try {
-			await formik.validateForm();
+			const validationErrors = await formik.validateForm();
+			formik.setTouched(setNestedObjectValues(validationErrors, true));
 			if (isEmpty(formik.errors)) alertDialogDisclosure.onOpen();
 		} catch (error) {}
 	};
