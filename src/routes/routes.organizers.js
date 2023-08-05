@@ -1,4 +1,9 @@
-import { LeadsDetailsPage, LeadsPage, AgentsPage } from '../pages/Main';
+import {
+	LeadsDetailsPage,
+	LeadsPage,
+	AgentsPage,
+	AgentDetailsPage,
+} from '../pages/Main';
 import { MainLayout } from '../layouts';
 
 const routesOrganizers = [
@@ -16,6 +21,11 @@ const routesOrganizers = [
 		path: '/users/agents',
 		layout: MainLayout,
 		component: AgentsPage,
+	},
+	{
+		path: '/users/agents/:id',
+		layout: MainLayout,
+		component: AgentDetailsPage,
 	},
 ];
 
