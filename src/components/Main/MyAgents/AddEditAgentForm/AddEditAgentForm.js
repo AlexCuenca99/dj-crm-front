@@ -81,13 +81,22 @@ export function AddEditAgentForm(props) {
 						? 'Agent could not be updated'
 						: 'Agent could not be created'
 				);
-				setToastDescription(error.message);
+				setToastDescription(error);
+
 				setToastStatus('error');
 				setToastDuration(7000);
 				setToastIsClosable(true);
 			}
 		},
 	});
+
+	useEffect(() => {
+		formik.setFieldValue(
+			'username',
+			`${formik.values.first_name}${formik.values.last_name}`
+		);
+	}, [formik.values.first_name, formik.values.last_name]);
+
 	useEffect(() => {
 		setFormLoading(loading);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -153,6 +162,28 @@ export function AddEditAgentForm(props) {
 					)}
 				</FormControl>
 			</Flex>
+
+			<FormControl
+				isInvalid={formik.touched.username && formik.errors.username}
+				mt="5%"
+			>
+				<FormLabel htmlFor="username">Username</FormLabel>
+				<Input
+					id="username"
+					placeholder="Username"
+					value={formik.values.username}
+					onBlur={formik.handleBlur}
+					onChange={formik.handleChange}
+				/>
+				{!formik.errors.username ? (
+					<FormHelperText>Enter a username</FormHelperText>
+				) : (
+					<FormErrorMessage>
+						{formik.errors.username}
+					</FormErrorMessage>
+				)}
+			</FormControl>
+
 			<FormControl
 				isInvalid={formik.touched.email && formik.errors.email}
 				mt="5%"
@@ -265,7 +296,7 @@ export function AddEditAgentForm(props) {
 					/>
 					{!formik.errors.birth ? (
 						<FormHelperText>
-							Enter the lead's birth day
+							Enter the agent's birth day
 						</FormHelperText>
 					) : (
 						<FormErrorMessage>
@@ -360,16 +391,17 @@ export function AddEditAgentForm(props) {
 
 function initialValues(data) {
 	return {
-		email: data?.email || '',
-		first_name: data?.first_name || '',
-		last_name: data?.last_name || '',
+		email: data?.email || 'lorem@lorem',
+		first_name: data?.first_name || 'lorem',
+		last_name: data?.last_name || 'ipsum',
 		birth: data?.birth || '',
-		gender: data?.gender || '',
-		address: data?.address || '',
-		phone: data?.phone || '',
-		password: '',
-		re_password: '',
+		gender: data?.gender || 'M',
+		address: data?.address || 'Lorem Ipsum',
+		phone: data?.phone || '0000000000',
+		password: 'loremipsum',
+		re_password: 'loremipsum',
 		role: data?.role || 'AGT',
+		username: data?.username || '',
 	};
 }
 
@@ -411,5 +443,9 @@ function validationSchema() {
 			.length(3, 'Role must have 3 characters')
 			.oneOf(['AGT', 'ORG'])
 			.required('Role is a required field'),
+		username: Yup.string()
+			.min(3, 'Min. length is 3 characters')
+			.max(20, 'Max. length is 20 characters')
+			.required('Username is a required field'),
 	};
 }

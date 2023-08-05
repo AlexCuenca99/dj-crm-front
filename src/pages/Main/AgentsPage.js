@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { isEmpty } from 'lodash';
+import { isEmpty, map } from 'lodash';
 import {
 	Alert,
 	AlertIcon,
+	ListItem,
 	Spinner,
 	StackDivider,
+	UnorderedList,
 	VStack,
 	useDisclosure,
 	useToast,
@@ -59,7 +61,19 @@ export function AgentsPage() {
 			toast({
 				toastId,
 				title: toastTitle,
-				description: toastDescription,
+				description: (
+					<UnorderedList>
+						{map(toastDescription.cause, (entityErrors, _) =>
+							map(entityErrors, (currentEntity, _) =>
+								map(currentEntity, (currentError, index) => (
+									<ListItem key={index}>
+										{currentError}
+									</ListItem>
+								))
+							)
+						)}
+					</UnorderedList>
+				),
 				status: toastStatus,
 				duration: toastDuration,
 				isClosable: toastIsClosable,

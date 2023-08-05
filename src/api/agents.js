@@ -1,4 +1,4 @@
-import { valuesIn } from 'lodash';
+import { merge, omit, valuesIn } from 'lodash';
 import { BASE_API } from 'utils/constants';
 
 export async function getAgentsApi(token) {
@@ -43,8 +43,11 @@ export async function createAgentsApi(token, formValue) {
 
 		if (!response.ok) {
 			const result = await response.json();
-			const errorValues = valuesIn(result);
-			throw new Error(errorValues);
+
+			// Merge entites in results object
+			// Remove errors from original object
+			const errorValues = omit(merge(result, result.errors), ['errors']);
+			throw new Error('Error in request', { cause: errorValues });
 		}
 		const result = await response.json();
 
