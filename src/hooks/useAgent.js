@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { createAgentsApi, getAgentsApi } from 'api/agents';
+import { createAgentsApi, getAgentByIdApi, getAgentsApi } from 'api/agents';
 import { useAuth } from '../hooks';
 
 export function useAgent() {
@@ -8,6 +8,7 @@ export function useAgent() {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const [agents, setAgents] = useState(null);
+	const [agent, setAgent] = useState(null);
 
 	const getAgents = async () => {
 		try {
@@ -34,12 +35,26 @@ export function useAgent() {
 		}
 	};
 
+	const getAgentById = async (id) => {
+		try {
+			setLoading(true);
+			const response = await getAgentByIdApi(auth.token, id);
+			setAgent(response);
+			setLoading(false);
+		} catch (error) {
+			setLoading(false);
+			setError(false);
+			throw error;
+		}
+	};
 	return {
 		loading,
 		error,
 		agents,
+		agent,
 
 		getAgents,
 		createAgent,
+		getAgentById,
 	};
 }
