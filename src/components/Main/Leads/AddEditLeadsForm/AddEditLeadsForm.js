@@ -16,7 +16,7 @@ import {
 } from '@chakra-ui/react';
 
 import { genderOptions } from 'utils/feeders';
-import { useLeads } from 'hooks';
+import { useLeads, useAgent } from 'hooks';
 
 import './AddEditLeadsForm.scss';
 
@@ -37,6 +37,7 @@ export function AddEditLeadsForm(props) {
 	} = props;
 
 	const { createLead, updateLead, loading } = useLeads();
+	const { getAgents, agents } = useAgent();
 
 	const formik = useFormik({
 		initialValues: initialValues(lead),
@@ -85,6 +86,10 @@ export function AddEditLeadsForm(props) {
 			}
 		},
 	});
+
+	useEffect(() => {
+		getAgents();
+	}, [formik.touched.agent]);
 
 	useEffect(() => {
 		setFormLoading(loading);
@@ -301,9 +306,11 @@ export function AddEditLeadsForm(props) {
 						formik.setFieldValue('agent', event.target.value)
 					}
 				>
-					<option key={0} value={0}>
-						Agent 1
-					</option>
+					{map(agents, (agent, _) => (
+						<option key={agent.id} value={agent.id}>
+							{`${agent.user.first_name} ${agent.user.last_name}`}
+						</option>
+					))}
 				</Select>
 				{!formik.errors.agent ? (
 					<FormHelperText>Select the agent</FormHelperText>
