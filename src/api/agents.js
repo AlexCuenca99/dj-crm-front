@@ -59,7 +59,7 @@ export async function createAgentsApi(token, formValue) {
 
 export async function getAgentByIdApi(token, id) {
 	try {
-		const url = `${BASE_API}/agents/${id}`;
+		const url = `${BASE_API}/agents/${id}/`;
 		const params = {
 			headers: {
 				Authorization: `Bearer ${token}`,
