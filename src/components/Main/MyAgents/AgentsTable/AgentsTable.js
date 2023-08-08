@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { map } from 'lodash';
 import {
 	Avatar,
@@ -16,6 +17,7 @@ import { FiArrowRight } from 'react-icons/fi';
 
 export function AgentsTable(props) {
 	const { agents } = props;
+
 	return (
 		<TableContainer>
 			<Table variant="simple" size="sm">
@@ -56,15 +58,14 @@ export function AgentsTable(props) {
 
 function Actions(props) {
 	const { agent } = props;
+	const navigate = useNavigate();
 
 	return (
 		<Td>
 			<IconButton
 				aria-label="See details"
 				icon={<FiArrowRight size={17} />}
-				onClick={() =>
-					console.log('See details of ', agent.user.first_name)
-				}
+				onClick={() => navigate(`/users/agents/${agent.id}`)}
 			/>
 		</Td>
 	);
