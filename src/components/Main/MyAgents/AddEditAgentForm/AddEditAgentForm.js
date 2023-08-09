@@ -95,6 +95,7 @@ export function AddEditAgentForm(props) {
 			'username',
 			`${formik.values.first_name}${formik.values.last_name}`
 		);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [formik.values.first_name, formik.values.last_name]);
 
 	useEffect(() => {
@@ -105,11 +106,13 @@ export function AddEditAgentForm(props) {
 	useEffect(() => {
 		setFormik(formik);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [formik]);
+	}, []);
 
 	const handleShowPassword = () => {
 		setShowPassword((prev) => !prev);
 	};
+
+	console.log('Hola');
 
 	return (
 		<form
@@ -391,13 +394,13 @@ export function AddEditAgentForm(props) {
 
 function initialValues(data) {
 	return {
-		email: data?.email || '',
-		first_name: data?.first_name || '',
-		last_name: data?.last_name || '',
-		birth: data?.birth || '',
-		gender: data?.gender || '',
-		address: data?.address || '',
-		phone: data?.phone || '',
+		email: data?.user.email || '',
+		first_name: data?.user.first_name || '',
+		last_name: data?.user.last_name || '',
+		birth: data?.user.birth || '',
+		gender: data?.user.gender || '',
+		address: data?.user.address || '',
+		phone: data?.user.phone || '',
 		password: '',
 		re_password: '',
 		role: data?.role || 'AGT',
