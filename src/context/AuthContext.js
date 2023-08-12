@@ -1,4 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import { Heading, Spinner } from '@chakra-ui/react';
 
 import { useUser } from '../hooks';
@@ -49,7 +50,10 @@ export function AuthProvider(props) {
 
 	if (auth === undefined) {
 		return (
-			<div
+			<motion.div
+				initial={{ opacity: 0, scale: 0.5 }}
+				animate={{ opacity: 1, scale: 1 }}
+				transition={{ duration: 0.5 }}
 				style={{
 					display: 'flex',
 					justifyContent: 'center',
@@ -61,7 +65,7 @@ export function AuthProvider(props) {
 				<Heading as="h2" size="lg" ml="12px">
 					Loading...
 				</Heading>
-			</div>
+			</motion.div>
 		);
 	}
 	return (
