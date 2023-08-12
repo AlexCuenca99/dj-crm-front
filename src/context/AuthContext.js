@@ -12,17 +12,17 @@ export const AuthContext = createContext({
 
 export function AuthProvider(props) {
 	const { children } = props;
-	const { getMe } = useUser();
+	const { getMe, verifyToken } = useUser();
 	const [auth, setAuth] = useState(undefined);
 
 	useEffect(() => {
 		(async () => {
 			const token = getToken();
-
-			if (token) {
+			try {
+				await verifyToken(token);
 				const me = await getMe(token);
 				setAuth({ token, me });
-			} else {
+			} catch (error) {
 				setAuth(null);
 			}
 		})();
@@ -33,12 +33,14 @@ export function AuthProvider(props) {
 		const me = await getMe(token);
 		setAuth({ token, me });
 	};
+
 	const logout = () => {
 		if (auth) {
 			removeToken();
 			setAuth(null);
 		}
 	};
+
 	const valueContext = {
 		auth,
 		login,
