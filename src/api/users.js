@@ -1,4 +1,4 @@
-import { result, valuesIn } from 'lodash';
+import { merge, omit, valuesIn } from 'lodash';
 import { BASE_API } from '../utils/constants';
 
 export async function loginApi(formValue) {
@@ -44,6 +44,31 @@ export async function getMeApi(token) {
 
 		const result = await response.json();
 		return result;
+	} catch (error) {
+		throw error;
+	}
+}
+
+export async function verifyTokenApi(token) {
+	try {
+		const url = `${BASE_API}/jwt/verify/`;
+		const params = {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ token: token }),
+		};
+		const response = await fetch(url, params);
+
+		if (!response.ok) {
+			const result = await response.json();
+
+			// Merge entites in results object
+			// Remove errors from original object
+			const errorValues = omit(merge(result, result.errors), ['errors']);
+			throw new Error('Error in request', { cause: errorValues });
+		}
+		return true;
 	} catch (error) {
 		throw error;
 	}
