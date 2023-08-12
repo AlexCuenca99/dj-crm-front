@@ -1,4 +1,4 @@
-import { getMeApi } from '../api/users';
+import { getMeApi, verifyTokenApi } from '../api/users';
 
 export function useUser() {
 	const getMe = async (token) => {
@@ -9,7 +9,17 @@ export function useUser() {
 			throw error;
 		}
 	};
+
+	const verifyToken = async (token) => {
+		try {
+			const response = await verifyTokenApi(token);
+			return response;
+		} catch (error) {
+			throw error;
+		}
+	};
 	return {
 		getMe,
+		verifyToken,
 	};
 }
