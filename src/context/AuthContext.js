@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { Spinner } from '@chakra-ui/react';
+import { Heading, Spinner } from '@chakra-ui/react';
 
 import { useUser } from '../hooks';
 import { getToken, removeToken, setToken } from '../api/token';
@@ -48,7 +48,21 @@ export function AuthProvider(props) {
 	};
 
 	if (auth === undefined) {
-		return <Spinner label="Fetching your data" />;
+		return (
+			<div
+				style={{
+					display: 'flex',
+					justifyContent: 'center',
+					alignItems: 'center',
+					height: '100vh',
+				}}
+			>
+				<Spinner thickness="3px" speed="0.65s" size="lg" />
+				<Heading as="h2" size="lg" ml="12px">
+					Loading...
+				</Heading>
+			</div>
+		);
 	}
 	return (
 		<AuthContext.Provider value={valueContext}>

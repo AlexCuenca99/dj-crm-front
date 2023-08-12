@@ -16,10 +16,10 @@ const theme = extendTheme({
 
 export default function App() {
 	return (
-		<AuthProvider>
-			<ChakraProvider theme={theme}>
+		<ChakraProvider theme={theme}>
+			<AuthProvider>
 				<Navigation />
-			</ChakraProvider>
-		</AuthProvider>
+			</AuthProvider>
+		</ChakraProvider>
 	);
 }
