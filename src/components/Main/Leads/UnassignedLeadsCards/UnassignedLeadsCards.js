@@ -1,5 +1,5 @@
 import React from 'react';
-import { Stack } from '@chakra-ui/react';
+import { SimpleGrid } from '@chakra-ui/react';
 
 import { UnassignedLeadsCard } from '../index';
 import { map } from 'lodash';
@@ -8,7 +8,7 @@ export function UnassignedLeadsCards(props) {
 	const { leads } = props;
 
 	return (
-		<Stack spacing={8} direction="row">
+		<SimpleGrid spacing={5} columns={4}>
 			{map(leads, (lead, _) => (
 				<UnassignedLeadsCard
 					key={lead.id}
@@ -16,6 +16,6 @@ export function UnassignedLeadsCards(props) {
 					id={lead.id}
 				/>
 			))}
-		</Stack>
+		</SimpleGrid>
 	);
 }
