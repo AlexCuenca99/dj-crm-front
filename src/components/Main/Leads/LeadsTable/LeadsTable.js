@@ -1,6 +1,7 @@
 import React from 'react';
 import { map } from 'lodash';
 import {
+	Badge,
 	IconButton,
 	Table,
 	TableCaption,
@@ -41,12 +42,24 @@ export function LeadsTable(props) {
 							<Td>{lead.address}</Td>
 							<Td>{lead.phone}</Td>
 							<Td>
-								<Tag
-									colorScheme={lead.agent ? 'cyan' : 'red'}
+								<Badge
+									colorScheme={
+										lead.category === 'NEW'
+											? 'cyan'
+											: lead.category === 'LST'
+											? 'red'
+											: lead.category === 'ASG'
+											? 'purple'
+											: lead.category === 'CNT'
+											? 'blue'
+											: lead.category === 'USG'
+											? 'teal'
+											: 'gray'
+									}
 									size="sm"
 								>
-									{lead.agent ? 'Assigned' : 'Unassigned'}
-								</Tag>
+									{lead.category}
+								</Badge>
 							</Td>
 							<Td>
 								{lead.agent
