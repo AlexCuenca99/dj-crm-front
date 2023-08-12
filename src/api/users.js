@@ -53,6 +53,7 @@ export async function verifyTokenApi(token) {
 	try {
 		const url = `${BASE_API}/jwt/verify/`;
 		const params = {
+			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 			},
