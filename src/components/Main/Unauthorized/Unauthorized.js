@@ -14,7 +14,7 @@ export function Unauthorized() {
 	const navigate = useNavigate();
 
 	const handleNavigate = () => {
-		navigate('/');
+		navigate('/login');
 	};
 
 	return (
@@ -33,11 +33,11 @@ export function Unauthorized() {
 					We are sorry
 				</AlertTitle>
 				<AlertDescription maxWidth="sm">
-					The page you are looking for is restricted for your role.
-					Please refer to your system administrator
+					The page you are looking for is restricted for authenticated
+					users. Please:
 				</AlertDescription>
 				<Button colorScheme="teal" onClick={handleNavigate}>
-					Go to home
+					Log-in
 				</Button>
 			</Alert>
 		</div>
