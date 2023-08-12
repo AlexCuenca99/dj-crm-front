@@ -1,20 +1,44 @@
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
 	Alert,
 	AlertDescription,
 	AlertIcon,
 	AlertTitle,
+	Button,
 } from '@chakra-ui/react';
-import React from 'react';
+
+import './Unauthorized.scss';
 
 export function Unauthorized() {
+	const navigate = useNavigate();
+
+	const handleNavigate = () => {
+		navigate('/');
+	};
+
 	return (
-		<div>
-			<Alert status="warning">
-				<AlertIcon />
-				<AlertTitle>You does not have permission to be here</AlertTitle>
-				<AlertDescription>
-					Only Organizers users can open this page
+		<div className="unathorized">
+			<Alert
+				status="warning"
+				variant="subtle"
+				flexDirection="column"
+				alignItems="center"
+				justifyContent="center"
+				textAlign="center"
+				height="200px"
+			>
+				<AlertIcon boxSize="40px" mr={0} />
+				<AlertTitle mt={4} mb={1} fontSize="lg">
+					We are sorry
+				</AlertTitle>
+				<AlertDescription maxWidth="sm">
+					The page you are looking for is restricted for your role.
+					Please refer to your system administrator
 				</AlertDescription>
+				<Button colorScheme="teal" onClick={handleNavigate}>
+					Go to home
+				</Button>
 			</Alert>
 		</div>
 	);
