@@ -7,9 +7,11 @@ export function RequireAuth(props) {
 	const { auth } = useAuth();
 	const location = useLocation();
 
-	return allowedRoles.includes(auth?.me.role) ? (
+	return !auth ? (
+		<Navigate to="/unauthorized" state={{ from: location }} replace />
+	) : allowedRoles.includes(auth?.me.role) ? (
 		<Outlet />
 	) : (
-		<Navigate to="/unauthorized" state={{ from: location }} replace />
+		<Navigate to="/forbidden" state={{ from: location }} replace />
 	);
 }
