@@ -1,8 +1,8 @@
 import React, { createContext, useEffect, useState } from 'react';
-
-import { getToken, removeToken, setToken } from '../api/token';
-import { useUser } from '../hooks';
 import { Spinner } from '@chakra-ui/react';
+
+import { useUser } from '../hooks';
+import { getToken, removeToken, setToken } from '../api/token';
 
 export const AuthContext = createContext({
 	auth: undefined,
