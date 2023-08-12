@@ -1,5 +1,5 @@
 import { Error404 } from '../pages';
-import { Unauthorized } from '../components/Main';
+import { Unauthorized, Forbidden } from '../components/Main';
 import { LoginPage, HomeAuthPage } from '../pages/Main';
 import { MainLayout, BasicLayout } from '../layouts';
 
@@ -18,6 +18,11 @@ const routesMain = [
 		path: '/users/me',
 		layout: MainLayout,
 		component: HomeAuthPage,
+	},
+	{
+		path: '/forbidden',
+		layout: BasicLayout,
+		component: Forbidden,
 	},
 	{
 		path: '/unauthorized',
