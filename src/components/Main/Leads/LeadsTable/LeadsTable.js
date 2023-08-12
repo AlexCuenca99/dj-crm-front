@@ -6,7 +6,6 @@ import {
 	Table,
 	TableCaption,
 	TableContainer,
-	Tag,
 	Tbody,
 	Td,
 	Th,
@@ -16,11 +15,13 @@ import {
 import { FiEdit2 } from 'react-icons/fi';
 import { RiDeleteBin5Line } from 'react-icons/ri';
 
+import './LeadsTable.scss';
+
 export function LeadsTable(props) {
 	const { leads, updateLead, deleteLead } = props;
 
 	return (
-		<TableContainer>
+		<TableContainer className="leads-table">
 			<Table variant="simple" size="sm">
 				<TableCaption>Leads users</TableCaption>
 				<Thead>
@@ -41,7 +42,7 @@ export function LeadsTable(props) {
 							<Td>{lead.email}</Td>
 							<Td>{lead.address}</Td>
 							<Td>{lead.phone}</Td>
-							<Td>
+							<Td className="leads-table__category">
 								<Badge
 									colorScheme={
 										lead.category === 'NEW'
