@@ -10,6 +10,7 @@ import {
 } from '@chakra-ui/react';
 
 import { useAgent } from 'hooks';
+import { AssignedLeadsTable } from 'components/Main';
 
 export function AgentDetailsPage() {
 	const { loading, agent, error, getAgentById } = useAgent();
@@ -37,7 +38,9 @@ export function AgentDetailsPage() {
 						<Tab>My assigned leads</Tab>
 					</TabList>
 					<TabPanels>
-						<TabPanel>Leads Section</TabPanel>
+						<TabPanel>
+							<AssignedLeadsTable leads={[]} />
+						</TabPanel>
 					</TabPanels>
 				</Tabs>
 			)}
