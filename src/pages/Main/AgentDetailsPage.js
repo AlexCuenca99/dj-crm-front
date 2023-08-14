@@ -20,6 +20,10 @@ export function AgentDetailsPage() {
 	const [refetch, setRefetch] = useState(false);
 
 	useEffect(() => {
+		document.title = 'Agent Details';
+	}, []);
+
+	useEffect(() => {
 		getAgentById(id);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [refetch]);
