@@ -100,3 +100,28 @@ export async function getMyLeadsApi(token) {
 		throw error;
 	}
 }
+
+export async function updateMyLeadApi(token, id, formValue) {
+	try {
+		const url = `${BASE_API}/agents/my-leads/${id}/`;
+		const params = {
+			method: 'PATCH',
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify(formValue),
+		};
+		const response = await fetch(url, params);
+
+		if (!response.ok) {
+			const result = await response.json();
+			const errorValues = omit(merge(result, result.errors), ['errors']);
+			throw new Error('Error in request', { cause: errorValues });
+		}
+
+		const result = await response.json();
+		return result;
+	} catch (error) {
+		throw error;
+	}
+}
