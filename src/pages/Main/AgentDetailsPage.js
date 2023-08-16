@@ -1,31 +1,40 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState, useRef } from 'react';
 import {
+	AlertDialog,
+	AlertDialogBody,
+	AlertDialogContent,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogOverlay,
+	Button,
 	Spinner,
 	Tab,
 	TabList,
 	TabPanel,
 	TabPanels,
 	Tabs,
+	useDisclosure,
+	useToast,
 } from '@chakra-ui/react';
 
 import { useAgent } from 'hooks';
 import { AssignedLeadsTable } from 'components/Main';
 
 export function AgentDetailsPage() {
-	const { loading, agent, error, getAgentById, getMyLeads, myLeads } =
-		useAgent();
+	const { loading, error, getMyLeads, myLeads } = useAgent();
 
-	const { id } = useParams();
+	const { isOpen, onOpen, onClose } = useDisclosure();
+	const toast = useToast();
 
+	const cancelRef = useRef();
 	const [refetch, setRefetch] = useState(false);
+	const [categoryValue, setCategoryValue] = useState('');
 
 	useEffect(() => {
 		document.title = 'Agent Details';
 	}, []);
 
 	useEffect(() => {
-		getAgentById(id);
 		getMyLeads();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [refetch]);
@@ -33,7 +42,32 @@ export function AgentDetailsPage() {
 	const onRefetch = () => {
 		setRefetch((prev) => !prev);
 	};
+	const handleCategoryChange = (e) => {
+		onOpen();
+		setCategoryValue(e.target.value);
+	};
 
+	const handleFetchChangeCategory = async () => {
+		try {
+			toast({
+				title: 'Account created.',
+				description: "We've created your account for you.",
+				status: 'success',
+				duration: 9000,
+				isClosable: true,
+			});
+			onClose();
+		} catch (error) {
+			toast({
+				title: 'Something went wrong.',
+				description: "We've not updated your lead for you.",
+				status: 'error',
+				duration: 9000,
+				isClosable: true,
+			});
+			onClose();
+		}
+	};
 	return (
 		<>
 			{loading ? (
@@ -45,11 +79,47 @@ export function AgentDetailsPage() {
 					</TabList>
 					<TabPanels>
 						<TabPanel>
-							<AssignedLeadsTable leads={myLeads} />
+							<AssignedLeadsTable
+								leads={myLeads}
+								handleCategoryChange={handleCategoryChange}
+							/>
 						</TabPanel>
 					</TabPanels>
 				</Tabs>
 			)}
+
+			<AlertDialog
+				isOpen={isOpen}
+				leastDestructiveRef={cancelRef}
+				onClose={onClose}
+			>
+				<AlertDialogOverlay>
+					<AlertDialogContent>
+						<AlertDialogHeader fontSize="lg" fontWeight="bold">
+							Change lead status
+						</AlertDialogHeader>
+
+						<AlertDialogBody>
+							Are you sure? You'll change your assigned lead
+							status. Your organizer will be emailed about the
+							operation.
+						</AlertDialogBody>
+
+						<AlertDialogFooter>
+							<Button ref={cancelRef} onClick={onClose}>
+								Cancel
+							</Button>
+							<Button
+								colorScheme="teal"
+								onClick={handleFetchChangeCategory}
+								ml={3}
+							>
+								Change status
+							</Button>
+						</AlertDialogFooter>
+					</AlertDialogContent>
+				</AlertDialogOverlay>
+			</AlertDialog>
 		</>
 	);
 }
