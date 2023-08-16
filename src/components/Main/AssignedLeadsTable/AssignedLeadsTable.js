@@ -1,3 +1,5 @@
+import React from 'react';
+import { map } from 'lodash';
 import {
 	Avatar,
 	Select,
@@ -10,8 +12,8 @@ import {
 	Thead,
 	Tr,
 } from '@chakra-ui/react';
-import { map } from 'lodash';
-import React from 'react';
+
+import { leadsCategoryOptions } from 'utils/feeders';
 
 export function AssignedLeadsTable(props) {
 	const { leads } = props;
@@ -28,7 +30,7 @@ export function AssignedLeadsTable(props) {
 				</Thead>
 				<Tbody>
 					{map(leads, (lead, _) => (
-						<Tr>
+						<Tr key={lead.id}>
 							<Td>
 								<Avatar
 									name={lead.first_name}
@@ -45,9 +47,14 @@ export function AssignedLeadsTable(props) {
 							</Td>
 							<Td>
 								<Select size="sm" placeholder="Select status">
-									<option value="option1">Option 1</option>
-									<option value="option2">Option 2</option>
-									<option value="option3">Option 3</option>
+									{map(
+										leadsCategoryOptions,
+										(category, _) => (
+											<option key={category.key}>
+												{category.text}
+											</option>
+										)
+									)}
 								</Select>
 							</Td>
 						</Tr>
