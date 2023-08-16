@@ -8,7 +8,10 @@ export function UnassignedLeadsCards(props) {
 	const { leads } = props;
 
 	return (
-		<SimpleGrid spacing={5} columns={4}>
+		<SimpleGrid
+			spacing={{ base: 2, md: 5, sm: 2 }}
+			columns={{ base: 2, sm: 2, md: 4 }}
+		>
 			{map(leads, (lead, _) => (
 				<UnassignedLeadsCard
 					key={lead.id}
