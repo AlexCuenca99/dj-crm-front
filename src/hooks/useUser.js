@@ -34,6 +34,7 @@ export function useUser() {
 			const response = await getAllUsersApi(auth.token);
 			setUsers(response);
 			setLoading(false);
+			return response;
 		} catch (error) {
 			setLoading(false);
 			setError(error);
