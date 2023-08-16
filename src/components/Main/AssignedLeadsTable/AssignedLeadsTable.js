@@ -45,29 +45,33 @@ export function AssignedLeadsTable(props) {
 							<Td>
 								{lead.first_name} {lead.last_name}
 							</Td>
-							<Td>
-								<Select
-									size="sm"
-									placeholder="Select status"
-									onChange={(e) => handleCategoryChange(e)}
-								>
-									{map(
-										leadsCategoryOptions,
-										(category, _) => (
-											<option
-												key={category.key}
-												value={category.value}
-											>
-												{category.text}
-											</option>
-										)
-									)}
-								</Select>
-							</Td>
+							<Actions
+								lead={lead}
+								handleCategoryChange={handleCategoryChange}
+							/>
 						</Tr>
 					))}
 				</Tbody>
 			</Table>
 		</TableContainer>
+	);
+}
+
+function Actions(props) {
+	const { lead, handleCategoryChange } = props;
+	return (
+		<Td>
+			<Select
+				size="sm"
+				placeholder="Select status"
+				onChange={(e) => handleCategoryChange(e, lead)}
+			>
+				{map(leadsCategoryOptions, (category, _) => (
+					<option key={category.key} value={category.value}>
+						{category.text}
+					</option>
+				))}
+			</Select>
+		</Td>
 	);
 }
