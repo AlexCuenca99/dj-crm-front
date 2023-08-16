@@ -108,6 +108,7 @@ export async function updateMyLeadApi(token, id, formValue) {
 			method: 'PATCH',
 			headers: {
 				Authorization: `Bearer ${token}`,
+				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify(formValue),
 		};
