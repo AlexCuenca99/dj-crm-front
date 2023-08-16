@@ -16,7 +16,7 @@ import {
 import { leadsCategoryOptions } from 'utils/feeders';
 
 export function AssignedLeadsTable(props) {
-	const { leads } = props;
+	const { leads, handleCategoryChange } = props;
 	return (
 		<TableContainer>
 			<Table variant="simple">
@@ -46,11 +46,18 @@ export function AssignedLeadsTable(props) {
 								{lead.first_name} {lead.last_name}
 							</Td>
 							<Td>
-								<Select size="sm" placeholder="Select status">
+								<Select
+									size="sm"
+									placeholder="Select status"
+									onChange={(e) => handleCategoryChange(e)}
+								>
 									{map(
 										leadsCategoryOptions,
 										(category, _) => (
-											<option key={category.key}>
+											<option
+												key={category.key}
+												value={category.value}
+											>
 												{category.text}
 											</option>
 										)
