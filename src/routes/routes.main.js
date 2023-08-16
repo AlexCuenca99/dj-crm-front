@@ -21,7 +21,7 @@ const routesMain = [
 	},
 	{
 		path: '/forbidden',
-		layout: BasicLayout,
+		layout: MainLayout,
 		component: Forbidden,
 	},
 	{
