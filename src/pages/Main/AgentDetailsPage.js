@@ -13,7 +13,8 @@ import { useAgent } from 'hooks';
 import { AssignedLeadsTable } from 'components/Main';
 
 export function AgentDetailsPage() {
-	const { loading, agent, error, getAgentById } = useAgent();
+	const { loading, agent, error, getAgentById, getMyLeads, myLeads } =
+		useAgent();
 
 	const { id } = useParams();
 
@@ -25,6 +26,7 @@ export function AgentDetailsPage() {
 
 	useEffect(() => {
 		getAgentById(id);
+		getMyLeads();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [refetch]);
 
@@ -43,7 +45,7 @@ export function AgentDetailsPage() {
 					</TabList>
 					<TabPanels>
 						<TabPanel>
-							<AssignedLeadsTable leads={[]} />
+							<AssignedLeadsTable leads={myLeads} />
 						</TabPanel>
 					</TabPanels>
 				</Tabs>
