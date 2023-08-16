@@ -4,6 +4,7 @@ import {
 	getAgentByIdApi,
 	getAgentsApi,
 	getMyLeadsApi,
+	updateMyLeadApi,
 } from 'api/agents';
 import { useAuth } from '../hooks';
 
@@ -66,6 +67,19 @@ export function useAgent() {
 			throw error;
 		}
 	};
+
+	const updateMyLead = async (id, data) => {
+		try {
+			setLoading(true);
+			await updateMyLeadApi(auth.token, id, data);
+			setLoading(false);
+		} catch (error) {
+			setLoading(false);
+			setError(error);
+			throw error;
+		}
+	};
+
 	return {
 		loading,
 		error,
@@ -77,5 +91,6 @@ export function useAgent() {
 		createAgent,
 		getAgentById,
 		getMyLeads,
+		updateMyLead,
 	};
 }
