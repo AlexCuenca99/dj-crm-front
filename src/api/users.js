@@ -74,3 +74,31 @@ export async function verifyTokenApi(token) {
 		throw error;
 	}
 }
+
+export async function getAllUsersApi(token) {
+	try {
+		const url = `${BASE_API}/users/`;
+		const params = {
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
+		};
+		const response = await fetch(url, params);
+
+		if (!response.ok) {
+			const result = await response.json();
+
+			// Merge entites in results object
+			// Remove errors from original object
+
+			const errorValues = omit(merge(result, result.errors), ['errors']);
+			throw new Error('Error in request', { cause: errorValues });
+		}
+
+		const result = await response.json();
+		return result;
+	} catch (error) {
+		throw error;
+	}
+}
