@@ -1,4 +1,4 @@
-import { LeadsDetailsPage, LeadsPage } from '../pages/Main';
+import { AgentDetailsPage, LeadsPage } from '../pages/Main';
 import { MainLayout } from '../layouts';
 
 const routesAgents = [
@@ -8,9 +8,9 @@ const routesAgents = [
 		component: LeadsPage,
 	},
 	{
-		path: '/users/leads/:id',
+		path: '/leads/my-assignments',
 		layout: MainLayout,
-		component: LeadsDetailsPage,
+		component: AgentDetailsPage,
 	},
 ];
 
