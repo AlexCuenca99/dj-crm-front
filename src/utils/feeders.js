@@ -5,9 +5,9 @@ export const genderOptions = [
 ];
 
 export const leadsCategoryOptions = [
-	{ key: 0, text: 'New', value: 'LST' },
-	{ key: 1, text: 'Lost', value: 'ASG' },
-	{ key: 2, text: 'Assigned', value: 'CNT' },
-	{ key: 3, text: 'Contacted', value: 'CVR' },
+	{ key: 0, text: 'New', value: 'NEW' },
+	{ key: 1, text: 'Lost', value: 'LST' },
+	{ key: 2, text: 'Assigned', value: 'ASG' },
+	{ key: 3, text: 'Contacted', value: 'CNT' },
 	{ key: 4, text: 'Unassigned', value: 'USG' },
 ];
