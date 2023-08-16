@@ -21,14 +21,15 @@ import { useAgent } from 'hooks';
 import { AssignedLeadsTable } from 'components/Main';
 
 export function AgentDetailsPage() {
-	const { loading, error, getMyLeads, myLeads } = useAgent();
+	const { loading, getMyLeads, myLeads, updateMyLead } = useAgent();
 
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const toast = useToast();
 
 	const cancelRef = useRef();
 	const [refetch, setRefetch] = useState(false);
-	const [categoryValue, setCategoryValue] = useState('');
+	const [categoryValue, setCategoryValue] = useState({});
+	const [leadId, setLeadId] = useState('');
 
 	useEffect(() => {
 		document.title = 'Agent Details';
@@ -42,13 +43,16 @@ export function AgentDetailsPage() {
 	const onRefetch = () => {
 		setRefetch((prev) => !prev);
 	};
-	const handleCategoryChange = (e) => {
+
+	const handleCategoryChange = (e, lead) => {
 		onOpen();
-		setCategoryValue(e.target.value);
+		setCategoryValue({ category: e.target.value });
+		setLeadId(lead.id);
 	};
 
-	const handleFetchChangeCategory = async () => {
+	const handleUpdateCategoryLead = async () => {
 		try {
+			await updateMyLead(leadId, categoryValue);
 			toast({
 				title: 'Account created.',
 				description: "We've created your account for you.",
@@ -57,6 +61,7 @@ export function AgentDetailsPage() {
 				isClosable: true,
 			});
 			onClose();
+			onRefetch();
 		} catch (error) {
 			toast({
 				title: 'Something went wrong.',
@@ -111,7 +116,7 @@ export function AgentDetailsPage() {
 							</Button>
 							<Button
 								colorScheme="teal"
-								onClick={handleFetchChangeCategory}
+								onClick={handleUpdateCategoryLead}
 								ml={3}
 							>
 								Change status
