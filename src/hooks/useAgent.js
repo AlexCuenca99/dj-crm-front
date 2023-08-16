@@ -49,7 +49,7 @@ export function useAgent() {
 			setLoading(false);
 		} catch (error) {
 			setLoading(false);
-			setError(false);
+			setError(error);
 			throw error;
 		}
 	};
@@ -62,7 +62,7 @@ export function useAgent() {
 			setLoading(false);
 		} catch (error) {
 			setLoading(false);
-			setError(false);
+			setError(error);
 			throw error;
 		}
 	};
