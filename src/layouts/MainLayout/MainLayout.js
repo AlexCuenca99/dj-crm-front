@@ -28,6 +28,7 @@ import {
 	FiSettings,
 	FiMenu,
 	FiChevronDown,
+	FiActivity,
 } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 
@@ -38,6 +39,7 @@ const LinkItems = [
 	{ name: 'Home', icon: FiHome, link: '/' },
 	{ name: 'Leads', icon: FiTrendingUp, link: '/users/leads' },
 	{ name: 'Agents', icon: FiCompass, link: '/users/agents' },
+	{ name: 'My assignments', icon: FiActivity, link: '/leads/my-assignments' },
 	{ name: 'Settings', icon: FiSettings, link: '/settings' },
 ];
 
