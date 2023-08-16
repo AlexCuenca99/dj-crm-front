@@ -65,6 +65,7 @@ function Actions(props) {
 				size="sm"
 				placeholder="Select status"
 				onChange={(e) => handleCategoryChange(e, lead)}
+				defaultValue={lead.category}
 			>
 				{map(leadsCategoryOptions, (category, _) => (
 					<option key={category.key} value={category.value}>
