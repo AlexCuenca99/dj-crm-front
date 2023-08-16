@@ -9,3 +9,4 @@ export * from './BaseDrawer';
 export * from './CustomAlertDialog';
 export * from './MyAgents';
 export * from './AssignedLeadsTable';
+export * from './Dashboard';
