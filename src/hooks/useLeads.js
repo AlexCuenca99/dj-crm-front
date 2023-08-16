@@ -20,6 +20,7 @@ export function useLeads() {
 			const response = await getLeadsApi(auth.token);
 			setLeads(response);
 			setLoading(false);
+			return response;
 		} catch (error) {
 			setLoading(false);
 			setError(error);
