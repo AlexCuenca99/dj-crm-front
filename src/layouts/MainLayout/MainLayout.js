@@ -1,5 +1,15 @@
 import React from 'react';
 
+import { useNavigate } from 'react-router-dom';
+import {
+	FiHome,
+	FiTrendingUp,
+	FiCompass,
+	FiSettings,
+	FiMenu,
+	FiChevronDown,
+	FiActivity,
+} from 'react-icons/fi';
 import {
 	IconButton,
 	Avatar,
@@ -21,16 +31,6 @@ import {
 	MenuList,
 	DrawerOverlay,
 } from '@chakra-ui/react';
-import {
-	FiHome,
-	FiTrendingUp,
-	FiCompass,
-	FiSettings,
-	FiMenu,
-	FiChevronDown,
-	FiActivity,
-} from 'react-icons/fi';
-import { useNavigate } from 'react-router-dom';
 
 import { useAuth } from '../../hooks';
 import { LoginPage } from '../../pages/Main';
