@@ -11,7 +11,7 @@ import { useAuth } from '../hooks';
 export function useAgent() {
 	const { auth } = useAuth();
 
-	const [loading, setLoading] = useState(true);
+	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const [agents, setAgents] = useState(null);
 	const [agent, setAgent] = useState(null);
