@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
-import { filter, isEmpty } from 'lodash';
+import { filter, isEmpty, map } from 'lodash';
 import {
 	Alert,
 	AlertIcon,
+	Skeleton,
 	Spinner,
+	Stack,
 	StackDivider,
 	VStack,
 	useDisclosure,
@@ -182,7 +184,16 @@ export function LeadsPage() {
 				actionTitle2={'Filter by category'}
 			/>
 			{loading ? (
-				<Spinner />
+				<Stack>
+					<Skeleton height="50px" borderRadius="10px" />
+					{map([0, 1, 2, 3, 4, 5, 6, 7], (_, index) => (
+						<Skeleton
+							key={index}
+							height="40px"
+							borderRadius="10px"
+						/>
+					))}
+				</Stack>
 			) : isEmpty(leads) ? (
 				<Alert status="warning">
 					<AlertIcon />
