@@ -4,7 +4,9 @@ import {
 	Alert,
 	AlertIcon,
 	ListItem,
-	Spinner,
+	Skeleton,
+	SkeletonCircle,
+	Stack,
 	StackDivider,
 	UnorderedList,
 	VStack,
@@ -126,7 +128,25 @@ export function AgentsPage() {
 				actionTitle2={'Filter by category'}
 			/>
 			{loading ? (
-				<Spinner />
+				<Stack>
+					<Skeleton borderRadius="10px" height="50px" mb="5" />
+					{map(Array(7), (_, index) => (
+						<Stack
+							key={index}
+							direction="row"
+							spacing={2}
+							alignContent="center"
+							alignItems="center"
+						>
+							<SkeletonCircle size="10" />
+							<Skeleton
+								borderRadius="10px"
+								height="30px"
+								w="100%"
+							/>
+						</Stack>
+					))}
+				</Stack>
 			) : isEmpty(agents) ? (
 				<Alert status="warning">
 					<AlertIcon />
