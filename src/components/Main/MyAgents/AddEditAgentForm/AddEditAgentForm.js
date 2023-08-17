@@ -106,7 +106,7 @@ export function AddEditAgentForm(props) {
 	useEffect(() => {
 		setFormik(formik);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [formik]);
 
 	const handleShowPassword = () => {
 		setShowPassword((prev) => !prev);
