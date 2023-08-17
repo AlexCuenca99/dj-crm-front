@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
 	FiHome,
 	FiTrendingUp,
@@ -35,7 +35,6 @@ import {
 
 import { useAuth } from '../../hooks';
 import { LoginPage } from '../../pages/Main';
-//import RocketManSVG from '/svg/rocket-man.svg';
 
 const LinkItems = [
 	{ name: 'Home', icon: FiHome, link: '/' },
@@ -63,7 +62,7 @@ const SidebarContent = ({ onClose, ...rest }) => {
 				mx="8"
 				justifyContent="space-between"
 			>
-				<Flex alignItems="center" cursor="pointer">
+				<Flex alignItems="center" cursor="pointer" as={Link} to="/">
 					<Image
 						src="/svgs/dj-crm-logo.svg"
 						alt="Rocket Man"
