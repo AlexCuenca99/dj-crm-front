@@ -30,10 +30,12 @@ import {
 	MenuItem,
 	MenuList,
 	DrawerOverlay,
+	Image,
 } from '@chakra-ui/react';
 
 import { useAuth } from '../../hooks';
 import { LoginPage } from '../../pages/Main';
+//import RocketManSVG from '/svg/rocket-man.svg';
 
 const LinkItems = [
 	{ name: 'Home', icon: FiHome, link: '/' },
@@ -61,9 +63,17 @@ const SidebarContent = ({ onClose, ...rest }) => {
 				mx="8"
 				justifyContent="space-between"
 			>
-				<Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-					Logo
-				</Text>
+				<Flex alignItems="center" cursor="pointer">
+					<Image
+						src="/svgs/dj-crm-logo.svg"
+						alt="Rocket Man"
+						boxSize="40px"
+						mr="2"
+					/>
+					<Text fontSize="2xl" fontWeight="bold" fontFamily="Poppins">
+						DjCRM
+					</Text>
+				</Flex>
 				<CloseButton
 					display={{ base: 'flex', md: 'none' }}
 					onClick={onClose}
@@ -138,15 +148,12 @@ const MobileNav = ({ onOpen, ...rest }) => {
 				aria-label="open menu"
 				icon={<FiMenu />}
 			/>
-
-			<Text
+			<Image
 				display={{ base: 'flex', md: 'none' }}
-				fontSize="2xl"
-				fontFamily="monospace"
-				fontWeight="bold"
-			>
-				Logo
-			</Text>
+				src="/svgs/dj-crm-logo.svg"
+				alt="Rocket Man"
+				boxSize="60px"
+			/>
 
 			<HStack spacing={{ base: '0', md: '6' }}>
 				<Flex alignItems={'center'}>
