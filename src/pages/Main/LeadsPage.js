@@ -22,7 +22,7 @@ import {
 } from 'components/Main';
 
 export function LeadsPage() {
-	const { loading, error, leads, getLeads, deleteLead } = useLeads();
+	const { loading, leads, getLeads, deleteLead } = useLeads();
 
 	const toast = useToast();
 	const drawerDisclosure = useDisclosure();
@@ -198,6 +198,7 @@ export function LeadsPage() {
 						leads={leads}
 						updateLead={updateLead}
 						deleteLead={confirmDeleteLead}
+						loading={loading}
 					/>
 					<UnassignedLeadsCards leads={unassignedLeads} />
 				</VStack>
