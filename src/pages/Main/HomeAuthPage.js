@@ -10,6 +10,7 @@ import {
 	Heading,
 	SimpleGrid,
 	Text,
+	Skeleton,
 } from '@chakra-ui/react';
 
 import { TitleLabelIconCard } from 'components/Main';
@@ -69,48 +70,45 @@ export function HomeAuthPage() {
 		<>
 			<SimpleGrid columns={{ base: 1, sm: 1, md: 3, lg: 4 }} spacing={10}>
 				{map(cardItems, (cardItem, index) => (
-					<TitleLabelIconCard
+					<Skeleton
+						height="100px"
 						key={index}
-						title={cardItem.title}
-						mainLabel={cardItem.mainLabel}
-						subLabel={cardItem.subLabel}
-						icon={cardItem.icon}
-					/>
+						borderRadius="20px"
+						isLoaded={!loading}
+						fadeDuration={1}
+					>
+						<TitleLabelIconCard
+							key={index}
+							title={cardItem.title}
+							mainLabel={cardItem.mainLabel}
+							subLabel={cardItem.subLabel}
+							icon={cardItem.icon}
+						/>
+					</Skeleton>
 				))}
 			</SimpleGrid>
-			<SimpleGrid
-				columns={{ base: 1, sm: 1, md: 2, lg: 2 }}
-				spacing={10}
-				mt="7"
-			>
-				<Card align="center">
-					<CardHeader>
-						<Heading size="md"> Customer dashboard</Heading>
-					</CardHeader>
-					<CardBody>
-						<Text>
-							View a summary of all your customers over the last
-							month.
-						</Text>
-					</CardBody>
-					<CardFooter>
-						<Button colorScheme="blue">View here</Button>
-					</CardFooter>
-				</Card>
-				<Card align="center">
-					<CardHeader>
-						<Heading size="md"> Customer dashboard</Heading>
-					</CardHeader>
-					<CardBody>
-						<Text>
-							View a summary of all your customers over the last
-							month.
-						</Text>
-					</CardBody>
-					<CardFooter>
-						<Button colorScheme="blue">View here</Button>
-					</CardFooter>
-				</Card>
+			<SimpleGrid columns={1} spacing={10} mt="7">
+				<Skeleton
+					isLoaded={!loading}
+					fadeDuration={2}
+					height="300px"
+					borderRadius="20px"
+				>
+					<Card align="center">
+						<CardHeader>
+							<Heading size="md"> Customer dashboard</Heading>
+						</CardHeader>
+						<CardBody>
+							<Text>
+								View a summary of all your customers over the
+								last month.
+							</Text>
+						</CardBody>
+						<CardFooter>
+							<Button colorScheme="blue">View here</Button>
+						</CardFooter>
+					</Card>
+				</Skeleton>
 			</SimpleGrid>
 		</>
 	);
