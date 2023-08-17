@@ -1,20 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { filter, map } from 'lodash';
 import { MdSupervisedUserCircle } from 'react-icons/md';
-import {
-	Card,
-	CardHeader,
-	CardBody,
-	CardFooter,
-	Button,
-	Heading,
-	SimpleGrid,
-	Text,
-	Skeleton,
-} from '@chakra-ui/react';
+import { Heading, SimpleGrid, Skeleton } from '@chakra-ui/react';
 
-import { TitleLabelIconCard } from 'components/Main';
 import { useUser, useLeads } from 'hooks';
+import { TitleLabelIconCard, LinearGraphic } from 'components/Main';
 
 export function HomeAuthPage() {
 	const { loading, getAllUsers } = useUser();
@@ -22,7 +12,7 @@ export function HomeAuthPage() {
 	const [orgUsers, setOrgUsers] = useState(0);
 	const [agtUsers, setAgtUsers] = useState(0);
 	const [leadUsers, setLeadUsers] = useState(0);
-	const [assignedLeads, setAssignedLeads] = useState(0);
+	const [leadsByCategory, setLeadsByCategory] = useState([]);
 
 	useEffect(() => {
 		document.title = 'My CRM Dashboard';
@@ -33,9 +23,40 @@ export function HomeAuthPage() {
 		});
 		getLeads().then((res) => {
 			setLeadUsers(res.length);
-			setAssignedLeads(
-				filter(res, (currRes) => currRes.agent !== null).length
-			);
+			let updateCategoryLeads = {};
+			updateCategoryLeads = [
+				{
+					name: 'New',
+					value: filter(res, (currRes) => currRes.category === 'NEW')
+						.length,
+					fill: '#8884d8',
+				},
+				{
+					name: 'Lost',
+					value: filter(res, (currRes) => currRes.category === 'LST')
+						.length,
+					fill: '#83a6ed',
+				},
+				{
+					name: 'Assigned',
+					value: filter(res, (currRes) => currRes.category === 'ASG')
+						.length,
+					fill: '#8dd1e1',
+				},
+				{
+					name: 'Contacted',
+					value: filter(res, (currRes) => currRes.category === 'CNT')
+						.length,
+					fill: '#82ca9d',
+				},
+				{
+					name: 'Unassigned',
+					value: filter(res, (currRes) => currRes.category === 'USG')
+						.length,
+					fill: '#a4de6c',
+				},
+			];
+			setLeadsByCategory([...leadsByCategory, ...updateCategoryLeads]);
 		});
 	}, []);
 
@@ -60,7 +81,7 @@ export function HomeAuthPage() {
 		},
 		{
 			title: 'Assigned',
-			mainLabel: assignedLeads,
+			mainLabel: leadsByCategory.assigned,
 			subLabel: 'ASG',
 			icon: MdSupervisedUserCircle,
 		},
@@ -68,6 +89,9 @@ export function HomeAuthPage() {
 
 	return (
 		<>
+			<Heading as="h2" size="lg" mb="5">
+				Dashboard
+			</Heading>
 			<SimpleGrid columns={{ base: 1, sm: 1, md: 3, lg: 4 }} spacing={10}>
 				{map(cardItems, (cardItem, index) => (
 					<Skeleton
@@ -94,20 +118,10 @@ export function HomeAuthPage() {
 					height="300px"
 					borderRadius="20px"
 				>
-					<Card align="center">
-						<CardHeader>
-							<Heading size="md"> Customer dashboard</Heading>
-						</CardHeader>
-						<CardBody>
-							<Text>
-								View a summary of all your customers over the
-								last month.
-							</Text>
-						</CardBody>
-						<CardFooter>
-							<Button colorScheme="blue">View here</Button>
-						</CardFooter>
-					</Card>
+					<LinearGraphic
+						data={leadsByCategory}
+						title={'Leads status'}
+					/>
 				</Skeleton>
 			</SimpleGrid>
 		</>

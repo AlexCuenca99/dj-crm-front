@@ -1,35 +1,34 @@
+import { Heading, StackDivider, VStack } from '@chakra-ui/react';
 import React from 'react';
-import { Legend, RadialBar, RadialBarChart, Tooltip } from 'recharts';
+import {
+	Bar,
+	BarChart,
+	CartesianGrid,
+	Legend,
+	ResponsiveContainer,
+	Tooltip,
+	XAxis,
+	YAxis,
+} from 'recharts';
 
 export function LinearGraphic(props) {
-	const { data } = props;
+	const { data, title } = props;
 
 	return (
-		<RadialBarChart
-			width={730}
-			height={250}
-			innerRadius="10%"
-			outerRadius="80%"
-			data={data}
-			startAngle={180}
-			endAngle={0}
-		>
-			<RadialBar
-				minAngle={15}
-				label={{ fill: '#666', position: 'insideStart' }}
-				background
-				clockWise={true}
-				dataKey="uv"
-			/>
-			<Legend
-				iconSize={10}
-				width={120}
-				height={140}
-				layout="vertical"
-				verticalAlign="middle"
-				align="right"
-			/>
-			<Tooltip />
-		</RadialBarChart>
+		<VStack align="start">
+			<Heading as="h3" size="lg" mb="5">
+				{title}
+			</Heading>
+			<ResponsiveContainer width="100%" minHeight="280px">
+				<BarChart data={data}>
+					<CartesianGrid strokeDasharray="3 3" />
+					<XAxis dataKey="name" />
+					<YAxis />
+					<Tooltip />
+					<Legend />
+					<Bar dataKey="value" fill="#8884d8" />
+				</BarChart>
+			</ResponsiveContainer>
+		</VStack>
 	);
 }
