@@ -24,6 +24,8 @@ export function HomeAuthPage() {
 	const [assignedLeads, setAssignedLeads] = useState(0);
 
 	useEffect(() => {
+		document.title = 'My CRM Dashboard';
+
 		getAllUsers().then((res) => {
 			setAgtUsers(filter(res, { role: 'AGT' }).length);
 			setOrgUsers(filter(res, { role: 'ORG' }).length);
