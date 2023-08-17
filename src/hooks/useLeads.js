@@ -10,7 +10,7 @@ import { useAuth } from '../hooks';
 export function useLeads() {
 	const { auth } = useAuth();
 
-	const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 	const [leads, setLeads] = useState(null);
 
