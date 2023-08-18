@@ -4,6 +4,7 @@ import {
 	Bar,
 	BarChart,
 	CartesianGrid,
+	Label,
 	Legend,
 	ResponsiveContainer,
 	Tooltip,
@@ -23,10 +24,16 @@ export function LinearGraphic(props) {
 				<BarChart data={data}>
 					<CartesianGrid strokeDasharray="3 3" />
 					<XAxis dataKey="name" />
+
 					<YAxis />
 					<Tooltip />
 					<Legend />
-					<Bar dataKey="value" fill="#8884d8" />
+					<Bar
+						dataKey="value"
+						legendType="none"
+						name="Quantity"
+						fill="#8884d8"
+					/>
 				</BarChart>
 			</ResponsiveContainer>
 		</VStack>
